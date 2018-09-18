@@ -26,11 +26,16 @@
         </table>
     </div>
 </div>
-<div id="topic-update-dialog">Update Topic Info</div>
+
+<div id="topic-update-dialog">
+    @await Html.PartialAsync("_UpdateTopicPartial.cshtml")
+</div>
+
 <div id="topic-create-dialog">
-    <span>Create Topic</span>
     @await Html.PartialAsync("_CreateTopicPartial.cshtml")
 </div>
+
+
 
 <script>
 
@@ -43,7 +48,7 @@
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
                 "url": "/AdminPanel/Admin/LoadTopics",
-                "type": "POST",
+                "type": "GET",
                 "datatype": "json",
                 "data": function (d) {
                     let table = $("#topic-admin-table").DataTable();
@@ -52,7 +57,7 @@
                     let order = table.order();
                     d.sortColumn = table.settings().init().columns[order[0][0]]["data"];
                     d.sortOrder = order[0][1];
-                    d.searchValue = "";
+                    d.searchValue = $('.dataTables_filter input').val();
                 }
             },
             "columnDefs":
@@ -127,6 +132,7 @@
     $("#topic-update-dialog").dialog({
         modal: true
     }).dialog("close");
+
     function Update(row) {
         $("#topic-update-dialog").dialog("open");
         var table = $("#topic-admin-table").DataTable();

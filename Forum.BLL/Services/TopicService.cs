@@ -52,8 +52,11 @@ namespace Forum.BLL.Services
         }
         public void Update(TopicDTO topic)
         {
-            var newTopic = _mapper.Map<TopicDTO, Topic>(topic);
-            _repository.Update(newTopic);
+            var oldTopic = _repository.GetAll().Where(p => p.Id == topic.Id).FirstOrDefault();
+            if (oldTopic == null)
+                throw new Exception("Resource not found");
+            _mapper.Map(topic, oldTopic);
+            _repository.Update(oldTopic);
         }
         public void Delete(long id)
         {

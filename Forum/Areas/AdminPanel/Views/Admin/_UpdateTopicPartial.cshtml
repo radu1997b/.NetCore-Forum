@@ -1,0 +1,22 @@
+﻿@model Forum.Web.Areas.AdminPanel.Models.AdminViewModels.TopicViewModel;
+
+<style>
+    #update-topic div {
+        text-align: center;
+    }
+
+    #update-topic input {
+        margin: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container" id="update-topic" style="width:inherit;">
+    <div class="text-capitalize">Updating Topic</div>
+    <form asp-action="UpdateTopic" method="post">
+        <input type="text" />
+        <input type="submit" class="btn btn-sm" />
+    </form>
+</div>
+

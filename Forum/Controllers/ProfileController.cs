@@ -47,7 +47,7 @@ namespace Forum.Web.Controllers
             var currentUserId = _userManager.GetUserId(User);
             if(user != null && user.Id != currentUserId)
             {
-                return View("~/Views/Shared/AccessUnauthorized.cshtml");
+                return View("~/Views/Shared/AccessDennied.cshtml");
             }
             var userModel = _mapper.Map<UpdateProfileViewModel>(user);
             ViewData["Id"] = Id;

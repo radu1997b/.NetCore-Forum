@@ -18,6 +18,8 @@ namespace Forum.Web
             CreateMap<Topic, TopicDTO>().ForMember(dest => dest.NumberOfRooms,
                                                    opt => opt.MapFrom(src => src.Rooms.Count())).ReverseMap();
             CreateMap<TopicDTO, TopicViewModel>();
+            CreateMap<TopicUpdateViewModel, TopicDTO>().ForMember(dest => dest.TopicCreationDate,
+                                                                 opt => opt.Ignore());
         }
     }
 }

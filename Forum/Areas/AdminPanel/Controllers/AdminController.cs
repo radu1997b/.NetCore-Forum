@@ -37,7 +37,7 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult LoadTopics(int pageIndex,int pageLength,string sortColumn="Id",string sortOrder="asc",string searchValue="")
         {
      
@@ -59,6 +59,13 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
             model.TopicCreationDate = DateTime.Now;
             var modelToDTO = _mapper.Map<TopicViewModel, TopicDTO>(model);
             _topicService.CreateTopic(modelToDTO);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult CreateTopic(TopicUpdateViewModel model)
+        {
+            var dto = _mapper.Map<TopicUpdateViewModel, TopicDTO>(model);
+            _topicService.Update(dto);
             return RedirectToAction("Index");
         }
     }
