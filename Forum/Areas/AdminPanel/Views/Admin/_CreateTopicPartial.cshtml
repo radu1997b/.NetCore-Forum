@@ -1,0 +1,8 @@
+﻿@model Forum.Web.Areas.AdminPanel.Models.AdminViewModels.TopicViewModel;
+
+<div class="container" style="width:inherit;">
+    <form asp-action="CreateTopic" method="post">
+        <input asp-for="TopicName" style="display:block;"/>
+        <input type="submit" style="display:block;"/>
+    </form>
+</div>

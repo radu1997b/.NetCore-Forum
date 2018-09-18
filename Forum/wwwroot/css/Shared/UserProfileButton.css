@@ -1,0 +1,17 @@
+﻿#user-btn{
+    color:aqua;
+    text-align:center;
+    cursor:pointer;
+    padding:0px;
+}
+
+#logout-form{
+    cursor:pointer;
+}
+
+#profile-letter{
+    width:45px;
+    height:45px;
+    display:inline;
+    background-color:aqua;
+}

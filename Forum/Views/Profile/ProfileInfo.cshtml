@@ -1,0 +1,95 @@
+﻿@model ProfileViewModel
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Profile Info";
+}
+@inject UserManager<User> UserManager
+
+<link rel="stylesheet" href="~/css/ProfileInfo/ProfileInfo.css" />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-center title-page">Profile Page</div>
+        </div>
+    </div>
+    @if (UserManager.GetUserId(User) == Model.Id)
+    {
+    <div class="row">
+        <div class="col-sm-12">
+            <a asp-area="" asp-controller="Profile" asp-action="UpdateProfile" asp-route-id="@UserManager.GetUserId(User)">
+                <button class="btn btn-primary" id="update-profile-btn">Update Profile</button>
+            </a>
+        </div>
+    </div>
+    }
+    <div class="row" id="user-profile">
+        <div class="col-sm-3">
+            <img class="img-responsive" id="user-photo" src="~/images/NoImage.jpg" />
+        </div>
+        <div class="col-sm-9 " id="user-main-info">
+            <br />
+            <div style="display:block;">
+                User Name: @Model.FullName
+            </div>
+            <div style="display:block;">
+                Role: @Model.Role <br />
+            </div>
+            <div style="display:block;">
+                Average Rating:
+                @for (var numOfStars = 1; numOfStars <= (int)Model.Stars; ++numOfStars)
+                {<i class="fa fa-star"></i> }
+                @for (var numOfStars = 1; numOfStars <= 5 - (int)Model.Stars; ++numOfStars)
+                {<i class="fa fa-star-o"></i> }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 title-page text-center">
+            Additional user informations
+        </div>
+    </div>
+    <div id="user-secondary-info">
+        @if (Model.Email != null)
+        {
+            <div class="row user-info-row">
+                <div class="col-xs-6">
+                    Email
+                </div>
+                <div class="col-xs-6">@Model.Email</div>
+            </div>
+        }
+        @if (Model.DateOfBirth != null)
+        {
+            <div class="row user-info-row">
+                <div class="col-xs-6">
+                    Birthday date
+                </div>
+                <div class="col-xs-6">@Model.DateOfBirth.Value.Day-@Model.DateOfBirth.Value.Month-@Model.DateOfBirth.Value.Year</div>
+            </div>
+        }
+        <div class="row user-info-row">
+            <div class="col-xs-6">
+                Number of Posts
+            </div>
+            <div class="col-xs-6">@Model.NumberOfPosts</div>
+        </div>
+        @if (Model.DateOfBirth != null)
+        {
+            <div class="row user-info-row">
+                <div class="col-xs-6">
+                    Age
+                </div>
+                <div class="col-xs-6">@Model.Age</div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container" style="margin-top:30px;">
+    <div class="row" id="user-tabs">
+        <div class="col-sm-4 text-center" id="favorites">Favorites</div>
+        <div class="col-sm-4 text-center" id="ratings">Ratings</div>
+        <div class="col-sm-4 text-center" id="posts">Posts</div>
+    </div>
+</div>
+

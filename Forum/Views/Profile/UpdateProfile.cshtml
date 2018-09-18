@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "UpdateProfile";
+}
+@model UpdateProfileViewModel
+
+<link rel="stylesheet" href="~/css/ProfileInfo/UpdateProfile.css" />
+
+<div class="container">
+    <div asp-validation-summary="All"></div>
+    <form asp-route-Id="@ViewData["Id"]" method="post">
+        <div class="row update-row">
+            <div class="col-sm-3">
+                <img src="~/images/NoImage.jpg" class="img-responsive">
+            </div>
+            <div class="col-sm-9">
+                <input type="file" id="photo-change"/>
+                <label for="file">Choose a photo</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+        <div class="row update-row">
+            <div class="col-sm-6">
+                <span>First Name</span>
+            </div>
+            <div class="col-sm-6">
+                <input asp-for="FirstName" value="@Model.FirstName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+        <div class="row update-row">
+            <div class="col-sm-6">
+                <span>Last Name</span>
+            </div>
+            <div class="col-sm-6">
+                <input asp-for="LastName" value="@Model.LastName" />
+            </div>
+        </div>
+        <div class="row update-row">
+            <div class="col-sm-6">
+                <span>Date of birth</span>
+            </div>
+            <div class="col-sm-6">
+                <input asp-for="DateOfBirth" value="@(Model.DateOfBirth == null ? "" : Model.DateOfBirth.Value.Date.ToString("yyyy-MM-dd"))"/>
+            </div>
+        </div>
+        <input type="submit" value="Update" />
+    </form>
+</div>
+
+
+<script src="~/js/UpdateProfile/UpdateProfile.js"></script>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
