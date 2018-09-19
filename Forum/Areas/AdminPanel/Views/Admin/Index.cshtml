@@ -35,8 +35,6 @@
     @await Html.PartialAsync("_CreateTopicPartial.cshtml")
 </div>
 
-
-
 <script>
 
     $(document).ready(() => {
@@ -82,7 +80,10 @@
                 { "data": "NumberOfRooms", "name": "Number of Rooms", "autoWidth": true },
                 { "data": "TopicCreationDate", "name": "Created Date", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" onclick="Update(' + full.Id + ')">Edit</a>'; },
+                    "render": function (data, type, full, meta) {
+                        
+                        return '<a id=' + full.Id + ' class="btn btn-info update-topic-btn">Edit</a>';
+                    },
                     "sortable" : false
                 },
                 {
@@ -94,13 +95,49 @@
             ],
             buttons: [
                 'copy', 'excel', 'pdf'
-            ]
+            ],
+            "initComplete": function (settings, json) {
+                addEventToUpdateButtons();
+            }
         });
-    });
+    
     function formatData(data) {
 
         return data.substring(0, 10);
+        }
+
+    
+    $("#topic-update-dialog").dialog({
+        modal: true
+    }).dialog("close");
+    
+    function Update(Id, topicName) {
+        $("#topic-update-dialog").dialog("open");
+        var table = $("#topic-admin-table").DataTable();
+        $("#update-topic input[type='text']").val(topicName);
+        $("#update-topic input[type='hidden'").val(Id);
     }
+
+    $("#topic-create-dialog").dialog({
+        modal: true
+    }).dialog("close");
+
+    function CreateTopic() {
+
+        $("#topic-create-dialog").dialog('open');
+    }
+
+        var table = $("#topic-admin-table").DataTable();
+        var addEventToUpdateButtons = () => {
+            var updateButtonList = $(".update-topic-btn");
+            updateButtonList.each((i, obj) => {
+                $(obj).on("click", () => {
+                    var data = table.row(i).data();
+                    Update(data.Id, data.TopicName);
+                });
+            });
+        }
+    });
     function DeleteData(CustomerID)
         {
             if (confirm("Are you sure you want to delete ...?"))
@@ -128,24 +165,5 @@
                     alert("error on deleting row");
                 }
             });
-    }
-    $("#topic-update-dialog").dialog({
-        modal: true
-    }).dialog("close");
-
-    function Update(row) {
-        $("#topic-update-dialog").dialog("open");
-        var table = $("#topic-admin-table").DataTable();
-        var row = table.fnFindCellRowIndexes(row, 0);
-        console.log(row);
-    }
-
-    $("#topic-create-dialog").dialog({
-        modal: true
-    }).dialog("close");
-
-    function CreateTopic() {
-
-        $("#topic-create-dialog").dialog('open');
     }
 </script>

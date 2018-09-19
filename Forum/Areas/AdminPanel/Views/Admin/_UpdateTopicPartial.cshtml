@@ -15,8 +15,9 @@
 <div class="container" id="update-topic" style="width:inherit;">
     <div class="text-capitalize">Updating Topic</div>
     <form asp-action="UpdateTopic" method="post">
-        <input type="text" />
+        <input asp-for="TopicName" type="text" />
         <input type="submit" class="btn btn-sm" />
+        <input asp-for="Id" type="hidden"/>
     </form>
 </div>
 

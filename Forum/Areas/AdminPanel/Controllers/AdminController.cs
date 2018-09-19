@@ -62,7 +62,7 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public ActionResult CreateTopic(TopicUpdateViewModel model)
+        public ActionResult UpdateTopic(TopicUpdateViewModel model)
         {
             var dto = _mapper.Map<TopicUpdateViewModel, TopicDTO>(model);
             _topicService.Update(dto);
