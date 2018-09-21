@@ -6,6 +6,7 @@
 <div class="container">
     <br />
     <div style="width:90%; margin:0 auto;">
+        <div class="row" asp-validation-summary="All"></div>
         <div class="row">
             <div class="col-sm-12">
                 <button class="btn btn-primary" style="float:right;" onclick="CreateTopic()">Add new Topic</button>
@@ -38,6 +39,7 @@
 <script>
 
     $(document).ready(() => {
+
         $("#topic-admin-table").DataTable({
 
             "processing": true, // for show progress bar
@@ -50,12 +52,13 @@
                 "datatype": "json",
                 "data": function (d) {
                     let table = $("#topic-admin-table").DataTable();
-                    d.pageIndex = table.page.info().page + 1;
-                    d.pageLength = table.page.info().length;
                     let order = table.order();
-                    d.sortColumn = table.settings().init().columns[order[0][0]]["data"];
-                    d.sortOrder = order[0][1];
-                    d.searchValue = $('.dataTables_filter input').val();
+                    d.numPage = table.page.info().page + 1;
+                    d.pageSize = table.page.info().length;
+                    d.columnToSort = table.settings().init().columns[order[0][0]]["data"];
+                    d.order = order[0][1];
+                    d.searchKeyword = $('.dataTables_filter input').val();
+                    d.columnToSearch = "TopicName";
                 }
             },
             "columnDefs":
@@ -77,11 +80,11 @@
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true },
                 { "data": "TopicName", "name": "Topic Name", "autoWidth": true },
-                { "data": "NumberOfRooms", "name": "Number of Rooms", "autoWidth": true },
+                { "data": "NumberOfRooms", "name": "Number of Rooms", "autoWidth": true, "sortable": false },
                 { "data": "TopicCreationDate", "name": "Created Date", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
-                        
+
                         return '<a id=' + full.Id + ' class="btn btn-info update-topic-btn">Edit</a>';
                     },
                     "sortable" : false
@@ -93,30 +96,43 @@
                     "sortable": false
                 }
             ],
-            buttons: [
-                'copy', 'excel', 'pdf'
-            ],
             "initComplete": function (settings, json) {
                 addEventToUpdateButtons();
             }
         });
-    
+        
+      
+    });
+
+
     function formatData(data) {
 
         return data.substring(0, 10);
         }
 
-    
+
     $("#topic-update-dialog").dialog({
         modal: true
     }).dialog("close");
-    
+
     function Update(Id, topicName) {
         $("#topic-update-dialog").dialog("open");
         var table = $("#topic-admin-table").DataTable();
         $("#update-topic input[type='text']").val(topicName);
         $("#update-topic input[type='hidden'").val(Id);
     }
+
+
+    var addEventToUpdateButtons = () => {
+            let table = $("#topic-admin-table").DataTable();
+            var updateButtonList = $(".update-topic-btn");
+            updateButtonList.each((i, obj) => {
+                $(obj).on("click", () => {
+                    var data = table.row(i).data();
+                    Update(data.Id, data.TopicName);
+                });
+            });
+        }
 
     $("#topic-create-dialog").dialog({
         modal: true
@@ -126,18 +142,6 @@
 
         $("#topic-create-dialog").dialog('open');
     }
-
-        var table = $("#topic-admin-table").DataTable();
-        var addEventToUpdateButtons = () => {
-            var updateButtonList = $(".update-topic-btn");
-            updateButtonList.each((i, obj) => {
-                $(obj).on("click", () => {
-                    var data = table.row(i).data();
-                    Update(data.Id, data.TopicName);
-                });
-            });
-        }
-    });
     function DeleteData(CustomerID)
         {
             if (confirm("Are you sure you want to delete ...?"))
@@ -165,5 +169,10 @@
                     alert("error on deleting row");
                 }
             });
-    }
+        }
+
+
 </script>
+
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

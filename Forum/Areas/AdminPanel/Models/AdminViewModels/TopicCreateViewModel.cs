@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Forum.Web.Areas.AdminPanel.Models.AdminViewModels
 {
-    public class TopicUpdateViewModel
+    public class TopicCreateViewModel
     {
         [Required]
-        public long Id { get; set; }
-        [Required]
-        [MaxLength(30,ErrorMessage ="Name must be not greater than 30")]
+        [MaxLength(30,ErrorMessage = "Length must be not greater than 30")]
         public string TopicName { get; set; }
     }
 }

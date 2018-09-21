@@ -30,7 +30,9 @@ namespace Forum.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+               options
+               .UseLazyLoadingProxies()
+               .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                                     b => b.MigrationsAssembly("Forum.DAL")));
 
             services.AddIdentity<User, IdentityRole>()
@@ -41,6 +43,9 @@ namespace Forum.Web
             services.AddScoped(typeof(IEmailSender), typeof(EmailSender));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IPostService, PostService>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.

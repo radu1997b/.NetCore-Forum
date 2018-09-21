@@ -17,7 +17,7 @@ namespace Forum.DAL.Configs
                 .IsRequired(true);
             builder.HasMany(t => t.Posts)
                 .WithOne(p => p.Room)
-                .HasForeignKey(f => f.ThreadId)
+                .HasForeignKey(f => f.RoomId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

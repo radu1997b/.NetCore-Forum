@@ -9,6 +9,6 @@ namespace Forum.DAL.Domain
         public virtual User Author { get; set; }
         public string AuthorId { get; set; }
         public virtual Room Room { get; set; }
-        public long ThreadId { get; set; }
+        public long RoomId { get; set; }
     }
 }

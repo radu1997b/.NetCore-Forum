@@ -10,63 +10,56 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Text.RegularExpressions;
 using System;
+using Cross_cutting.PageHelperClasses;
 
 namespace Forum.BLL.Services
 {
     public class TopicService : ITopicService
     {
-        private IRepository<Topic> _repository;
+        private ITopicRepository _repository;
         private IMapper _mapper;
-        public TopicService(IRepository<Topic> repository, IMapper mapper)
+        public TopicService(ITopicRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
-        public IEnumerable<TopicDTO> GetTopicsPage(int numOfPage, int pageSize, string searchKeyword, string columnToSort, string order)
+        public PagedResult<TopicDTO> GetTopicsPage(PagedRequestDescription pagedRequestDescription)
         {
-            if (searchKeyword == null)
-                searchKeyword = "";
-            var topics = _repository.GetAll().Where(p => p.TopicName.StartsWith(searchKeyword));
-            if (order.Equals("asc", StringComparison.InvariantCultureIgnoreCase))
+            //TODO Move logic to extension method
+            var getTopicsPaginated = _repository.GetTopicsPaged(pagedRequestDescription);
+            var result = new PagedResult<TopicDTO>
             {
-                if (columnToSort == "NumberOfRooms")
-                    topics = topics.OrderBy(p => p.Rooms.Count());
-                else
-                    topics = topics.OrderBy(p => p.GetType().GetProperty(columnToSort).GetValue(p));
-            }
-            else
-            {
-                if (columnToSort == "NumberOfRooms")
-                    topics = topics.OrderByDescending(p => p.Rooms.Count());
-                else
-                    topics = topics.OrderByDescending(p => p.GetType().GetProperty(columnToSort).GetValue(p));
-            }
-            topics = topics.Page(numOfPage, pageSize);
-            IEnumerable<TopicDTO> result = _mapper.Map<IEnumerable<Topic>, IEnumerable<TopicDTO>>(topics);
+                AllItemsCount = getTopicsPaginated.AllItemsCount,
+                result = _mapper.Map<ICollection<Topic>, ICollection<TopicDTO>>(getTopicsPaginated.result)
+            };
             return result;
         }
         public void CreateTopic(TopicDTO topic)
         {
             var newTopic = _mapper.Map<TopicDTO, Topic>(topic);
             _repository.Add(newTopic);
+            _repository.Save();
         }
         public void Update(TopicDTO topic)
         {
-            var oldTopic = _repository.GetAll().Where(p => p.Id == topic.Id).FirstOrDefault();
+            var oldTopic = _repository.GetById(topic.Id);
             if (oldTopic == null)
                 throw new Exception("Resource not found");
             _mapper.Map(topic, oldTopic);
             _repository.Update(oldTopic);
+            _repository.Save();
         }
         public void Delete(long id)
         {
-            var topic = _repository.GetAll().Where(p => p.Id == id).FirstOrDefault();
+            var topic = _repository.GetById(id);
             if (topic != null)
+            {
                 _repository.Delete(topic);
+                _repository.Save();
+                return;
+            }
+            throw new Exception("Resource not Found");
         }
-        public long GetNumberOfTopics()
-        {
-            return _repository.GetAll().Count();
-        }
+
     }
 }

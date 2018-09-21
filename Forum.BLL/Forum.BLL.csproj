@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cross-cutting\Cross-cutting.csproj" />
     <ProjectReference Include="..\Forum.DAL\Forum.DAL.csproj" />
   </ItemGroup>
 

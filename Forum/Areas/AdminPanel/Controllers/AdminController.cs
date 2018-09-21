@@ -11,6 +11,7 @@ using Forum.Web.Areas.AdminPanel.Models.AdminViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Cross_cutting.PageHelperClasses;
 
 namespace Forum.Web.Areas.AdminPanel.Controllers
 {
@@ -37,15 +38,22 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
         {
             return View();
         }
+
+        //TODO Create c class for data table params PagedRequestDescription for example
+        //TODO Default values should be set when Data Table is created
+        //TODO Create PaginatedList that will be sent in JSON
         [HttpGet]
-        public IActionResult LoadTopics(int pageIndex,int pageLength,string sortColumn="Id",string sortOrder="asc",string searchValue="")
+        public IActionResult LoadTopics(PagedRequestDescription pagedRequestDescription)
         {
-     
-            IEnumerable<TopicDTO> result;
-            result = _topicService.GetTopicsPage(pageIndex, pageLength,searchValue,sortColumn,sortOrder);
-            var topics = _mapper.Map<IEnumerable<TopicDTO>, IEnumerable<TopicViewModel>>(result);
-            var allTopicCount = _topicService.GetNumberOfTopics();
-            return Json(new {recordsFiltered = allTopicCount, recordsTotal = allTopicCount, data = topics.ToList() });
+            
+            var topicsDTO = _topicService.GetTopicsPage(pagedRequestDescription);
+            var result = new
+            {
+                recordsTotal = topicsDTO.AllItemsCount,
+                recordsFiltered = topicsDTO.AllItemsCount,
+                data = _mapper.Map<ICollection<TopicDTO>, ICollection<TopicViewModel>>(topicsDTO.result)
+            };
+            return Json(result);
         }
         [HttpDelete]
         public ActionResult DeleteTopic(long id)
@@ -54,19 +62,29 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
             return new JsonResult(new { result = "Succes" });
         }
         [HttpPost]
-        public ActionResult CreateTopic(TopicViewModel model)
+        public ActionResult CreateTopic(TopicCreateViewModel model)
         {
-            model.TopicCreationDate = DateTime.Now;
-            var modelToDTO = _mapper.Map<TopicViewModel, TopicDTO>(model);
+        
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid attempt to create a new resource");
+                return RedirectToAction(nameof(Index));
+            }
+            var modelToDTO = _mapper.Map<TopicCreateViewModel, TopicDTO>(model);
             _topicService.CreateTopic(modelToDTO);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
         [HttpPost]
         public ActionResult UpdateTopic(TopicUpdateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid attempt to update resource");
+                return RedirectToAction(nameof(Index));
+            }
             var dto = _mapper.Map<TopicUpdateViewModel, TopicDTO>(model);
             _topicService.Update(dto);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

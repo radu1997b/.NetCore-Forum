@@ -10,7 +10,14 @@ namespace Forum.DAL.Repository
 {
     public class Repository<T> : IRepository<T> where T:Entity
     {
-        private DbContext _context;
+        protected DbContext _context;
+        public T GetById(long Id)
+        {
+            var entity = _context.Set<T>().Where(p => p.Id == Id).FirstOrDefault();
+            if (entity == null)
+                throw new Exception("Entity not found");
+            return entity;
+        }
         public Repository(DbContext context)
         {
             _context = context;
@@ -18,22 +25,19 @@ namespace Forum.DAL.Repository
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
         }
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
         }
         public void Delete(T entity)
         {
-            var tempEntity = _context.Set<T>().Find(entity.Id);
+            var tempEntity = GetById(entity.Id);
             _context.Set<T>().Remove(tempEntity);
-            _context.SaveChanges();
         }
-        public IQueryable<T> GetAll()
+        public void Save()
         {
-            return _context.Set<T>().Select(p => p);
+            _context.SaveChanges();
         }
     }
 }
