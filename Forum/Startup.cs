@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +14,11 @@ using Forum.BLL.Interfaces;
 using Forum.BLL.Services;
 using Forum.DAL.Repository;
 using Newtonsoft.Json.Serialization;
+using Cross_cutting.ExceptionHandlingFilter;
+using Microsoft.Extensions.Logging;
+using Serilog.AspNetCore;
+using Serilog.Sinks.File;
+using Serilog;
 
 namespace Forum.Web
 {
@@ -27,7 +31,7 @@ namespace Forum.Web
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) 
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                options
@@ -38,14 +42,16 @@ namespace Forum.Web
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IEmailSender), typeof(EmailSender));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITopicService, TopicService>();
             services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IUserService, UserService>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
@@ -56,7 +62,7 @@ namespace Forum.Web
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
             });
-            services.AddMvc()
+            services.AddMvc(opt => opt.Filters.Add(typeof(ErrorHandlerAttribute)))
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddAutoMapper(x => x.AddProfile(new MapperProfile()));
         }

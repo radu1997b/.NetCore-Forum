@@ -11,6 +11,8 @@ using AutoMapper;
 using System.Text.RegularExpressions;
 using System;
 using Cross_cutting.PageHelperClasses;
+using Cross_cutting.Exceptions;
+using System.Net;
 
 namespace Forum.BLL.Services
 {
@@ -25,7 +27,6 @@ namespace Forum.BLL.Services
         }
         public PagedResult<TopicDTO> GetTopicsPage(PagedRequestDescription pagedRequestDescription)
         {
-            //TODO Move logic to extension method
             var getTopicsPaginated = _repository.GetTopicsPaged(pagedRequestDescription);
             var result = new PagedResult<TopicDTO>
             {
@@ -44,7 +45,7 @@ namespace Forum.BLL.Services
         {
             var oldTopic = _repository.GetById(topic.Id);
             if (oldTopic == null)
-                throw new Exception("Resource not found");
+                throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "Resource not found");
             _mapper.Map(topic, oldTopic);
             _repository.Update(oldTopic);
             _repository.Save();
@@ -58,7 +59,7 @@ namespace Forum.BLL.Services
                 _repository.Save();
                 return;
             }
-            throw new Exception("Resource not Found");
+            throw new HttpStatusCodeException((int)HttpStatusCode.NotFound,"Resource not found");
         }
 
     }

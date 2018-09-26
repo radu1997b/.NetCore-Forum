@@ -4,6 +4,7 @@ using Forum.BLL.DataTransferObjects.Room;
 using Forum.BLL.DataTransferObjects.Topic;
 using Forum.DAL.Domain;
 using Forum.Web.Areas.AdminPanel.Models.AdminViewModels;
+using Forum.Web.Models.PostViewModels;
 using Forum.Web.Models.ProfileViewModels;
 using Forum.Web.Models.RoomViewModels;
 using System;
@@ -27,7 +28,7 @@ namespace Forum.Web
                                                                  opt => opt.Ignore());
             CreateMap<TopicCreateViewModel, TopicDTO>();
             CreateMap<Post, PostDTO>().ForMember(p => p.AuthorFullName,
-                                                 o => o.MapFrom(src => src.Author.FirstName + src.Author.LastName))
+                                                 o => o.MapFrom(src => src.Author.FirstName + " " + src.Author.LastName))
                                       .ForMember(p => p.AuthorEmail,
                                                  o => o.MapFrom(src => src.Author.Email))
                                       .ForMember(p => p.AuthorNumberOfPosts,
@@ -35,9 +36,13 @@ namespace Forum.Web
             CreateMap<Room, RoomDTO>().ForMember(p => p.TopicName,
                                                  o => o.MapFrom(src => src.Topic.TopicName))
                                       .ForMember(p => p.NumberOfPosts,
-                                                 o => o.MapFrom(src => src.Posts.Count()));
+                                                 o => o.MapFrom(src => src.Posts.Count()))
+                                      .ForMember(p => p.RoomId,
+                                                 o => o.MapFrom(src => src.Id));
                                       
             CreateMap<RoomDTO, RoomViewModel>();
+            CreateMap<CreatePostViewModel, CreatePostDTO>();
+            CreateMap<CreatePostDTO, Post>();
         }
     }
 }

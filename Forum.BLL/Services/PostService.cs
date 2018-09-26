@@ -4,10 +4,10 @@ using Forum.BLL.DataTransferObjects.Post;
 using Forum.BLL.Interfaces;
 using Forum.DAL.Domain;
 using Forum.DAL.Repository;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Forum.BLL.Services
 {
@@ -30,6 +30,12 @@ namespace Forum.BLL.Services
                 result = _mapper.Map<ICollection<Post>, ICollection<PostDTO>>(postsFiltered.result)
             };
             return result;
+        }
+        public void AddPost(CreatePostDTO post)
+        {
+            var newPost = _mapper.Map<CreatePostDTO, Post>(post);
+            _repository.Add(newPost);
+            _repository.Save();
         }
     }
 }

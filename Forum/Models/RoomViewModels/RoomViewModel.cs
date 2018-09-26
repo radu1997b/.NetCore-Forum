@@ -8,6 +8,7 @@ namespace Forum.Web.Models.RoomViewModels
 {
     public class RoomViewModel
     {
+        public long RoomId { get; set; }
         public string TopicName { get; set; }
         public string RoomName { get; set; }
         public int NumberOfPosts { get; set; }
