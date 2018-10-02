@@ -11,7 +11,7 @@ namespace Forum.BLL.Interfaces
     public interface IPostService
     {
         PagedResult<PostDTO> GetPostsPaginated(Expression<Func<Post,bool>> filter,
-                                               PagedRequestDescription pagedRequestDescription);
+                                               int page);
         void AddPost(CreatePostDTO post);
     }
 }

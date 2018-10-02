@@ -28,6 +28,7 @@ namespace Forum.Web.Controllers
             {
                 return View("~/Views/Profile/UserNotFound.cshtml");
             }
+            //use mapping
             var model = new ProfileViewModel
             {
                 Id = Id,
@@ -50,6 +51,7 @@ namespace Forum.Web.Controllers
                 return View("~/Views/Shared/AccessDennied.cshtml");
             }
             var userModel = _mapper.Map<UpdateProfileViewModel>(user);
+            //remove viewdata
             ViewData["Id"] = Id;
             return View(userModel);
         }
@@ -73,6 +75,8 @@ namespace Forum.Web.Controllers
             AddErrors(result);
             return View(model);
         }
+
+        //TODO
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

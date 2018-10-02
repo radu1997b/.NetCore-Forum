@@ -1,7 +1,7 @@
 ﻿
 namespace Forum.DAL.Domain
 {
-    public class UserRoom
+    public class UserRoom : Entity
     {
         public string UserId { get; set; }
         public virtual User User { get; set; }

@@ -24,45 +24,17 @@ namespace Forum.Web.Controllers
             _userService = userService;
             _mapper = mapper;
         }
-        public IActionResult GetPostsByRoom(long RoomID,PagedRequestDescription pagedRequestDescription)
-        {
-            var getPostsFiltered = _postService.GetPostsPaginated(p => p.RoomId == RoomID, pagedRequestDescription);
-            var result = new
-            {
-                recordsTotal = getPostsFiltered.AllItemsCount,
-                recordsFiltered = getPostsFiltered.AllItemsCount,
-                data = _mapper.Map<ICollection<PostDTO>, ICollection<PostViewModel>>(getPostsFiltered.result)
-            };
-            return Json(result);
-        }
-        public IActionResult GetPostsByUser(string AuthorId,PagedRequestDescription pagedRequestDescription)
-        {
-            var getPostsFiltered = _postService.GetPostsPaginated(p => p.AuthorId == AuthorId, pagedRequestDescription);
-            var result = new
-            {
-                recordsTotal = getPostsFiltered.AllItemsCount,
-                recordsFiltered = getPostsFiltered.AllItemsCount,
-                data = _mapper.Map<ICollection<PostDTO>, ICollection<PostViewModel>>(getPostsFiltered.result)
-            };
-            return Json(result);
-        }
-        [HttpGet]
-        public IActionResult GetPost(PostViewModel model)
-        {
-            return PartialView("_PostPartial",model);
-        }
         [HttpPost]
         public IActionResult CreatePost(CreatePostViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Unnable to post message.Please try again later.");
-                return RedirectToAction("GetRoom", "Room", new { Id = model.RoomId });
+                return BadRequest();
             }
             var postDTO = _mapper.Map<CreatePostViewModel, CreatePostDTO>(model);
             postDTO.AuthorId = HttpContext.User.GetUserId();
             _postService.AddPost(postDTO);
-            return RedirectToAction("GetRoom", "Room", new { Id = model.RoomId },null);
+            return Ok();
         }
     }
 }

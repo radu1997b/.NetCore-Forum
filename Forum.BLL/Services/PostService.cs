@@ -21,13 +21,13 @@ namespace Forum.BLL.Services
             _mapper = mapper;
         }
         public PagedResult<PostDTO> GetPostsPaginated(Expression<Func<Post, bool>> filter, 
-                                                      PagedRequestDescription pagedRequestDescription)
+                                                      int page)
         {
-           var postsFiltered = _repository.GetPostsPaginated(filter, pagedRequestDescription);
+           var postsFiltered = _repository.GetPostsPaginated(filter, page);
             var result = new PagedResult<PostDTO>
             {
                 AllItemsCount = postsFiltered.AllItemsCount,
-                result = _mapper.Map<ICollection<Post>, ICollection<PostDTO>>(postsFiltered.result)
+                result = _mapper.Map<IList<Post>, IList<PostDTO>>(postsFiltered.result)
             };
             return result;
         }

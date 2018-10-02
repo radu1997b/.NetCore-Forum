@@ -70,8 +70,7 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid attempt to create a new resource");
                 return RedirectToAction(nameof(Index));
             }
-            var modelToDTO = _mapper.Map<TopicCreateViewModel, TopicDTO>(model);
-            _topicService.CreateTopic(modelToDTO);
+            _topicService.CreateTopic(model.TopicName);
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]

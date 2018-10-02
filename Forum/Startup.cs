@@ -52,6 +52,8 @@ namespace Forum.Web
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
@@ -120,6 +122,14 @@ namespace Forum.Web
             foreach (var task in tasks)
                 if (!task.Result.Succeeded)
                     return false;
+            var user = new User
+            {
+                UserName = Configuration.GetSection("OwnerEmail").Get<string>(),
+                FirstName = "Radu",
+                LastName = "Cebotari",
+                Email = Configuration.GetSection("OwnerEmail").Get<string>()
+            };
+            await userManager.CreateAsync(user,"30101997aB&");
             var ownerUser = await userManager.FindByEmailAsync(Configuration.GetSection("OwnerEmail").Get<string>());
             var isAlreadyOwner = await userManager.IsInRoleAsync(ownerUser, "Owner");
             IdentityResult result = null;

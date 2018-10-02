@@ -1,0 +1,27 @@
+﻿@model SubscriptionViewModel
+
+<style>
+    #subscribe-container{
+        text-align:center;
+    }
+</style>
+
+<div class="row" id="subscribe-container">
+@{ 
+    if (!Model.IsSubscribed)
+    {
+        <div>
+            You are not subscribed to room.
+            <a asp-controller="Subscriptions" asp-action="Subscribe" asp-route-Id="@Model.RoomId">Subscribe</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            You are subscibed to room.
+            <a asp-controller="Subscriptions" asp-action="UnSubscribe" asp-route-Id="@Model.RoomId">Unsubscibe</a>
+        </div>
+    }
+}
+</div>
+

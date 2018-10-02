@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Forum.BLL.DataTransferObjects.Post;
 using Forum.BLL.DataTransferObjects.Room;
+using Forum.BLL.DataTransferObjects.Subscriptions;
 using Forum.BLL.DataTransferObjects.Topic;
 using Forum.DAL.Domain;
 using Forum.Web.Areas.AdminPanel.Models.AdminViewModels;
@@ -21,11 +22,9 @@ namespace Forum.Web
             CreateMap<User, UpdateProfileViewModel>().ReverseMap();
             CreateMap<Topic, TopicDTO>().ForMember(dest => dest.NumberOfRooms,
                                                    opt => opt.MapFrom(src => src.Rooms.Count()));
-            CreateMap<TopicDTO, Topic>().ForMember(dest => dest.TopicCreationDate,
-                                                   opt => opt.Ignore());
+            CreateMap<TopicDTO, Topic>();
             CreateMap<TopicDTO, TopicViewModel>();
-            CreateMap<TopicUpdateViewModel, TopicDTO>().ForMember(dest => dest.TopicCreationDate,
-                                                                 opt => opt.Ignore());
+            CreateMap<TopicUpdateViewModel, TopicDTO>();
             CreateMap<TopicCreateViewModel, TopicDTO>();
             CreateMap<Post, PostDTO>().ForMember(p => p.AuthorFullName,
                                                  o => o.MapFrom(src => src.Author.FirstName + " " + src.Author.LastName))
@@ -43,6 +42,7 @@ namespace Forum.Web
             CreateMap<RoomDTO, RoomViewModel>();
             CreateMap<CreatePostViewModel, CreatePostDTO>();
             CreateMap<CreatePostDTO, Post>();
+            CreateMap<SubscriptionsDTO, UserRoom>();
         }
     }
 }

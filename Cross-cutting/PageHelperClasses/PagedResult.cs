@@ -7,6 +7,6 @@ namespace Cross_cutting.PageHelperClasses
     public class PagedResult<T>
     {
         public int AllItemsCount { get; set; }
-        public ICollection<T> result { get; set; }
+        public IList<T> result { get; set; }
     }
 }

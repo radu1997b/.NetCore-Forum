@@ -10,7 +10,7 @@ namespace Forum.Web.Models.PostViewModels
         public string AuthorId { get; set; }
         public string AuthorFullName { get; set; }
         public int AuthorNumberOfPosts { get; set; }
-        public DateTime PostDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public string Message { get; set; }
         public string AuthorEmail { get; set; }
     }

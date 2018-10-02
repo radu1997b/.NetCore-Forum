@@ -12,7 +12,8 @@ namespace Forum.DAL.Configs
     {
         public void Configure(EntityTypeBuilder<UserRoom> builder)
         {
-            builder.HasKey(key => new { key.UserId, key.RoomId });
+            builder.HasKey(key => new { key.UserId, key.RoomId} );
+            builder.HasAlternateKey(key => key.Id);
             builder.HasOne(p => p.User)
                 .WithMany(u => u.UserRooms)
                 .HasForeignKey(f => f.UserId)

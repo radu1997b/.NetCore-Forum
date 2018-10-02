@@ -8,6 +8,38 @@ namespace Forum.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "UserRoom");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Topics");
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -43,8 +75,7 @@ namespace Forum.DAL.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 30, nullable: false),
                     LastName = table.Column<string>(maxLength: 30, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false)
+                    DateOfBirth = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,8 +88,8 @@ namespace Forum.DAL.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TopicName = table.Column<string>(maxLength: 50, nullable: true),
-                    TopicCreationDate = table.Column<DateTime>(nullable: false)
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    TopicName = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,8 +208,8 @@ namespace Forum.DAL.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     RoomName = table.Column<string>(maxLength: 50, nullable: false),
-                    RoomCreationDate = table.Column<DateTime>(nullable: false),
                     TopicId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
@@ -198,10 +229,10 @@ namespace Forum.DAL.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Message = table.Column<string>(maxLength: 250, nullable: false),
-                    PostDate = table.Column<DateTime>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    Message = table.Column<string>(maxLength: 3000, nullable: false),
                     AuthorId = table.Column<string>(nullable: false),
-                    ThreadId = table.Column<long>(nullable: false)
+                    RoomId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,8 +244,8 @@ namespace Forum.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Posts_Rooms_ThreadId",
-                        column: x => x.ThreadId,
+                        name: "FK_Posts_Rooms_RoomId",
+                        column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -224,12 +255,15 @@ namespace Forum.DAL.Migrations
                 name: "UserRoom",
                 columns: table => new
                 {
+                    Id = table.Column<long>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
                     RoomId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoom", x => new { x.UserId, x.RoomId });
+                    table.UniqueConstraint("AK_UserRoom_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserRoom_Rooms_RoomId",
                         column: x => x.RoomId,
@@ -289,9 +323,9 @@ namespace Forum.DAL.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_ThreadId",
+                name: "IX_Posts_RoomId",
                 table: "Posts",
-                column: "ThreadId");
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_TopicId",

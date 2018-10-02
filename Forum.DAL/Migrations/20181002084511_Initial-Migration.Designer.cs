@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180911111723_InitialMigration")]
+    [Migration("20181002084511_Initial-Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Forum.DAL.Domain.Post", b =>
@@ -28,19 +28,19 @@ namespace Forum.DAL.Migrations
                     b.Property<string>("AuthorId")
                         .IsRequired();
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(250);
+                        .HasMaxLength(3000);
 
-                    b.Property<DateTime>("PostDate");
-
-                    b.Property<long>("ThreadId");
+                    b.Property<long>("RoomId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("ThreadId");
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Posts");
                 });
@@ -50,7 +50,7 @@ namespace Forum.DAL.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("RoomCreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("RoomName")
                         .IsRequired()
@@ -70,7 +70,7 @@ namespace Forum.DAL.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("TopicCreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("TopicName")
                         .HasMaxLength(50);
@@ -89,8 +89,6 @@ namespace Forum.DAL.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime?>("DateOfBirth");
 
@@ -149,7 +147,13 @@ namespace Forum.DAL.Migrations
 
                     b.Property<long>("RoomId");
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<long>("Id");
+
                     b.HasKey("UserId", "RoomId");
+
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("RoomId");
 
@@ -273,7 +277,7 @@ namespace Forum.DAL.Migrations
 
                     b.HasOne("Forum.DAL.Domain.Room", "Room")
                         .WithMany("Posts")
-                        .HasForeignKey("ThreadId")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

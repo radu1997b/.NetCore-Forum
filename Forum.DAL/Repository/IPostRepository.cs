@@ -10,6 +10,6 @@ namespace Forum.DAL.Repository
     public interface IPostRepository : IRepository<Post>
     {
         PagedResult<Post> GetPostsPaginated(Expression<Func<Post, bool>> filter,
-                                            PagedRequestDescription pagedRequestDescription);
+                                            int page);
     }
 }

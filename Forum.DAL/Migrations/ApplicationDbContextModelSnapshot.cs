@@ -15,7 +15,7 @@ namespace Forum.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Forum.DAL.Domain.Post", b =>
@@ -26,11 +26,11 @@ namespace Forum.DAL.Migrations
                     b.Property<string>("AuthorId")
                         .IsRequired();
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<DateTime>("PostDate");
+                        .HasMaxLength(3000);
 
                     b.Property<long>("RoomId");
 
@@ -48,7 +48,7 @@ namespace Forum.DAL.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("RoomCreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("RoomName")
                         .IsRequired()
@@ -68,7 +68,7 @@ namespace Forum.DAL.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("TopicCreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("TopicName")
                         .HasMaxLength(50);
@@ -87,8 +87,6 @@ namespace Forum.DAL.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime?>("DateOfBirth");
 
@@ -147,7 +145,13 @@ namespace Forum.DAL.Migrations
 
                     b.Property<long>("RoomId");
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<long>("Id");
+
                     b.HasKey("UserId", "RoomId");
+
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("RoomId");
 

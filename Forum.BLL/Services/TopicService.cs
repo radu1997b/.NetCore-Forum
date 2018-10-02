@@ -16,6 +16,8 @@ using System.Net;
 
 namespace Forum.BLL.Services
 {
+    //TODO - remobe status codes from Services
+
     public class TopicService : ITopicService
     {
         private ITopicRepository _repository;
@@ -31,14 +33,17 @@ namespace Forum.BLL.Services
             var result = new PagedResult<TopicDTO>
             {
                 AllItemsCount = getTopicsPaginated.AllItemsCount,
-                result = _mapper.Map<ICollection<Topic>, ICollection<TopicDTO>>(getTopicsPaginated.result)
+                result = _mapper.Map<IList<Topic>, IList<TopicDTO>>(getTopicsPaginated.result)
             };
             return result;
         }
-        public void CreateTopic(TopicDTO topic)
+        public void CreateTopic(string TopicName)
         {
-            var newTopic = _mapper.Map<TopicDTO, Topic>(topic);
-            _repository.Add(newTopic);
+            var topic = new Topic
+            {
+                TopicName = TopicName
+            };
+            _repository.Add(topic);
             _repository.Save();
         }
         public void Update(TopicDTO topic)

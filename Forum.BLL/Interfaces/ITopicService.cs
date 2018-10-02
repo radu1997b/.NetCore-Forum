@@ -10,7 +10,7 @@ namespace Forum.BLL.Interfaces
     public interface ITopicService
     {
         PagedResult<TopicDTO> GetTopicsPage(PagedRequestDescription pagedRequestDescription);
-        void CreateTopic(TopicDTO topic);
+        void CreateTopic(string TopicName);
         void Update(TopicDTO topic);
         void Delete(long id);
     }

@@ -13,7 +13,7 @@ namespace Forum.DAL.Configs
         public void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.Property(p => p.Message)
-                .HasMaxLength(250)
+                .HasMaxLength(3000)
                 .IsRequired();
             builder.HasOne(p => p.Author)
                 .WithMany(a => a.Posts)
