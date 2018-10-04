@@ -9,5 +9,6 @@ namespace Forum.DAL.Repository
     public interface ITopicRepository : IRepository<Topic>
     {
         PagedResult<Topic> GetTopicsPaged(PagedRequestDescription pagedRequestDescription);
+        IList<Topic> GetAllTopics();
     }
 }

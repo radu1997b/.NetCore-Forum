@@ -10,6 +10,7 @@ namespace Forum.DAL.Repository
 {
     public interface IRepository<T> where T: Entity
     {
+
         T GetById(long id);
         void Add(T entity);
         void Update(T entity);

@@ -51,7 +51,6 @@
     </div>
     <div asp-validation-summary="All"></div>
 
-    @* TODO Create a SubscriptionViewModel in RoomViewModel *@
     <div id="subscription-container">
         @await Html.PartialAsync("~/Views/Subscription/_SubscriptionPartial.cshtml", Model.subscriptionViewModel)
     </div>
@@ -76,6 +75,7 @@
 <div class="container" style="margin-top:20px">
     <textarea name="editor"></textarea>
 </div>
+<div id="post-status" class="text-center"></div>
 <div id="post-btn-wrapper">
     <button id="post-btn" class="btn-success" onclick="SendPost()">Post</button>
 </div>
@@ -120,6 +120,7 @@
         
     });
     var SendPost = () => {
+        $("#post-status").text("Loading...");
         $.ajax({
             url: "/Post/CreatePost",
             type: "POST",
@@ -128,7 +129,8 @@
                 Message: CKEDITOR.instances['editor'].getData()
             },
             success: onSucces,
-            error: onFailure
+            error: onFailure,
+            complete: () => { $("#post-status").text(""); }
         });
     };
 

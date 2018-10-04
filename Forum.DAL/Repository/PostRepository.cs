@@ -14,19 +14,10 @@ namespace Forum.DAL.Repository
     {
         public PostRepository(DbContext context) : base(context)
         { }
-
-
-        //TODO - REturn PagedResult with DTO
         public PagedResult<Post> GetPostsPaginated(Expression<Func<Post, bool>> filter, 
                                                    int page)
         {
-            var result = new PagedResult<Post>
-            {
-                result = _context.Set<Post>().Where(filter)
-                                .Skip((page-1) * 10).Take(10).ToList(),
-                AllItemsCount = _context.Set<Post>().Where(filter)
-                                        .Count()
-            };
+            var result = _context.Set<Post>().Where(filter).Page(page, 10);
             return result;
         }
     }

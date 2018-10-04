@@ -8,6 +8,8 @@ using Forum.Web.Areas.AdminPanel.Models.AdminViewModels;
 using Forum.Web.Models.PostViewModels;
 using Forum.Web.Models.ProfileViewModels;
 using Forum.Web.Models.RoomViewModels;
+using Forum.Web.Models.TopicViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +33,8 @@ namespace Forum.Web
                                       .ForMember(p => p.AuthorEmail,
                                                  o => o.MapFrom(src => src.Author.Email))
                                       .ForMember(p => p.AuthorNumberOfPosts,
-                                                 o => o.MapFrom(src => src.Author.Posts.Count()));
+                                                 o => o.MapFrom(src => src.Author.Posts.Count()))
+                                      .ForMember(p => p.UserPhotoPath, o => o.MapFrom(src => src.Author.UserPhotoPath));
             CreateMap<Room, RoomDTO>().ForMember(p => p.TopicName,
                                                  o => o.MapFrom(src => src.Topic.TopicName))
                                       .ForMember(p => p.NumberOfPosts,
@@ -43,6 +46,14 @@ namespace Forum.Web
             CreateMap<CreatePostViewModel, CreatePostDTO>();
             CreateMap<CreatePostDTO, Post>();
             CreateMap<SubscriptionsDTO, UserRoom>();
+            CreateMap<CreateRoomViewModel, CreateRoomDTO>().ReverseMap();
+            CreateMap<CreateRoomDTO, Room>().ReverseMap();
+            CreateMap<Topic, TopicListItemDTO>();
+            CreateMap<TopicListItemDTO, SelectListItem>().ForMember(p => p.Value, o => o.MapFrom(src => src.Id.ToString()))
+                                                        .ForMember(p => p.Text, o => o.MapFrom(src => src.TopicName));
+            CreateMap<Topic, TopicInfoDTO>();
+            CreateMap<TopicInfoDTO, TopicInfoViewModel>();
+            CreateMap<User, ProfileViewModel>().ForMember(p => p.FullName, o => o.MapFrom(src => src.FirstName + src.LastName));
         }
     }
 }

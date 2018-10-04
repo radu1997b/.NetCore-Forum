@@ -12,8 +12,9 @@ namespace Forum.Web.Models.ProfileViewModels
         public string Email { get; set; }
         public string Role { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public int Stars { get; set; }
+        public bool IsHisAccount { get; set; }
         public int NumberOfPosts { get; set; }
+        public string UserPhotoPath { get; set; }
         public int Age
         {
             get

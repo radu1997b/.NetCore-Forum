@@ -10,5 +10,6 @@ namespace Forum.BLL.DataTransferObjects.Room
         public string TopicName { get; set; }
         public string RoomName { get; set; }
         public int NumberOfPosts { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Forum.BLL.Interfaces
 {
-    public interface IUserService
+    public interface IPhotoService
     {
-        string GetUserId(HttpContext context);
+        Task<string> AddImage(IFormFile fileInfo);
     }
 }

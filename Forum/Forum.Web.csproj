@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Forum.DAL\Forum.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\UserPhotos\" />
+  </ItemGroup>
+
 </Project>

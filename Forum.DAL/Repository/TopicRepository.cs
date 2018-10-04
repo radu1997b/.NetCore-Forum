@@ -14,11 +14,13 @@ namespace Forum.DAL.Repository
         public TopicRepository(DbContext context) : base(context)
         { }
 
-
-        //TODO RETURN DTO
         public PagedResult<Topic> GetTopicsPaged(PagedRequestDescription pagedRequestDescription)
         {
             return _context.Set<Topic>().Page(pagedRequestDescription);
+        }
+        public IList<Topic> GetAllTopics()
+        {
+            return _context.Set<Topic>().ToList();
         }
     }
 }

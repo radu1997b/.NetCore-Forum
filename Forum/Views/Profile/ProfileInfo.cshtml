@@ -18,14 +18,14 @@
     <div class="row">
         <div class="col-sm-12">
             <a asp-area="" asp-controller="Profile" asp-action="UpdateProfile" asp-route-id="@UserManager.GetUserId(User)">
-                <button class="btn btn-primary" id="update-profile-btn">Update Profile</button>
+                <div class="btn btn-primary" id="update-profile-btn">Update Profile</div>
             </a>
         </div>
     </div>
     }
     <div class="row" id="user-profile">
         <div class="col-sm-3">
-            <img class="img-responsive" id="user-photo" src="~/images/NoImage.jpg" />
+            <img class="img-responsive" id="user-photo" src="@Model.UserPhotoPath" />
         </div>
         <div class="col-sm-9 " id="user-main-info">
             <br />
@@ -34,13 +34,6 @@
             </div>
             <div style="display:block;">
                 Role: @Model.Role <br />
-            </div>
-            <div style="display:block;">
-                Average Rating:
-                @for (var numOfStars = 1; numOfStars <= (int)Model.Stars; ++numOfStars)
-                {<i class="fa fa-star"></i> }
-                @for (var numOfStars = 1; numOfStars <= 5 - (int)Model.Stars; ++numOfStars)
-                {<i class="fa fa-star-o"></i> }
             </div>
         </div>
     </div>

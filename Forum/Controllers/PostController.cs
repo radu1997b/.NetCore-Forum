@@ -16,12 +16,10 @@ namespace Forum.Web.Controllers
     public class PostController : Controller
     {
         private IPostService _postService;
-        private IUserService _userService;
         private IMapper _mapper;
-        public PostController(IPostService postService,IUserService userService,IMapper mapper)
+        public PostController(IPostService postService,IMapper mapper)
         {
             _postService = postService;
-            _userService = userService;
             _mapper = mapper;
         }
         [HttpPost]

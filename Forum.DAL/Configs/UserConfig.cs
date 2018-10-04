@@ -20,6 +20,9 @@ namespace Forum.DAL.Configs
                 .IsRequired(true);
             builder.Property(u => u.DateOfBirth)
                 .IsRequired(false);
+            builder.Property(u => u.UserPhotoPath)
+                .IsRequired(false)
+                .HasMaxLength(200);
         }
     }
 }

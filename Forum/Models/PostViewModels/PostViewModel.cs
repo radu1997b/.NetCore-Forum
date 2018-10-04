@@ -13,5 +13,6 @@ namespace Forum.Web.Models.PostViewModels
         public DateTime CreationDate { get; set; }
         public string Message { get; set; }
         public string AuthorEmail { get; set; }
+        public string UserPhotoPath { get; set; }
     }
 }

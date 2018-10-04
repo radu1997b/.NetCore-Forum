@@ -7,14 +7,13 @@
 
 <div class="container">
     <div asp-validation-summary="All"></div>
-    <form asp-route-Id="@ViewData["Id"]" method="post">
+    <form asp-route-Id="@Model.Id" method="post" enctype="multipart/form-data">
         <div class="row update-row">
             <div class="col-sm-3">
-                <img src="~/images/NoImage.jpg" class="img-responsive">
+                <img src="@Model.UserPhotoPath" class="img-responsive"/>
             </div>
             <div class="col-sm-9">
-                <input type="file" id="photo-change"/>
-                <label for="file">Choose a photo</label>
+                <input asp-for="ImageInfo"/>
             </div>
         </div>
         <div class="row">
@@ -48,10 +47,12 @@
                 <span>Date of birth</span>
             </div>
             <div class="col-sm-6">
-                <input asp-for="DateOfBirth" value="@(Model.DateOfBirth == null ? "" : Model.DateOfBirth.Value.Date.ToString("yyyy-MM-dd"))"/>
+                <input asp-for="DateOfBirth" value="@(Model.DateOfBirth == null ? "" : Model.DateOfBirth.Value.Date.ToString("yyyy-MM-dd"))" />
             </div>
         </div>
-        <input type="submit" value="Update" />
+        <div class="row text-center">
+            <input type="submit" value="Update" />
+        </div>
     </form>
 </div>
 

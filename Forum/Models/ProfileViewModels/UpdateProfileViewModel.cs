@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,9 @@ namespace Forum.Web.Models.ProfileViewModels
 {
     public class UpdateProfileViewModel
     {
+        public string Id { get; set; }
+        public string UserPhotoPath { get; set; }
+        public IFormFile ImageInfo { get; set; }
         [MaxLength(30)]
         [Required]
         public string FirstName { get; set; }

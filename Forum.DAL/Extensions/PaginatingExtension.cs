@@ -24,6 +24,15 @@ namespace Forum.DAL.Extensions
             };
             return pagedResult;
         }
+        public static PagedResult<T> Page<T>(this IQueryable<T> list,int page,int pageSize)
+        {
+            var pagedResult = new PagedResult<T>
+            {
+                AllItemsCount = list.Count(),
+                result = list.Skip((page - 1) * pageSize).Take(pageSize).ToList()
+            };
+            return pagedResult;
+        }
 
     }
 }

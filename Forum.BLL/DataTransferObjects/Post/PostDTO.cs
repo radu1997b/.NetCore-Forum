@@ -12,5 +12,6 @@ namespace Forum.BLL.DataTransferObjects.Post
         public int AuthorNumberOfPosts { get; set; }
         public string AuthorEmail { get; set; }
         public string Message { get; set; }
+        public string UserPhotoPath { get; set; }
     }
 }

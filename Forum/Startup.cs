@@ -51,9 +51,10 @@ namespace Forum.Web
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IPhotoService, PhotoService>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
@@ -89,11 +90,6 @@ namespace Forum.Web
 
             app.UseAuthentication();
 
-            if (!ConfigureRoles(roleManager,userManager).Result)
-            {
-                throw new Exception("Error on creating roles!");
-            }
-            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -129,14 +125,14 @@ namespace Forum.Web
                 LastName = "Cebotari",
                 Email = Configuration.GetSection("OwnerEmail").Get<string>()
             };
-            await userManager.CreateAsync(user,"30101997aB&");
+            await userManager.CreateAsync(user, "30101997aB&");
             var ownerUser = await userManager.FindByEmailAsync(Configuration.GetSection("OwnerEmail").Get<string>());
             var isAlreadyOwner = await userManager.IsInRoleAsync(ownerUser, "Owner");
             IdentityResult result = null;
             if (!isAlreadyOwner)
                 result = await userManager.AddToRoleAsync(ownerUser, "Owner");
             if (result != null && !result.Succeeded)
-            { 
+            {
                 return false;
             }
             return true;

@@ -66,6 +66,18 @@ namespace Forum.BLL.Services
             }
             throw new HttpStatusCodeException((int)HttpStatusCode.NotFound,"Resource not found");
         }
+        public IList<TopicListItemDTO> GetAllTopics()
+        {
+            var allTopicsDomain = _repository.GetAllTopics();
+            var result = _mapper.Map<IList<Topic>, IList<TopicListItemDTO>>(allTopicsDomain);
+            return result;
+        }
+        public TopicInfoDTO GetTopicInfo(long Id)
+        {
+            var topicDomain = _repository.GetById(Id);
+            var result = _mapper.Map<Topic, TopicInfoDTO>(topicDomain);
+            return result;
+        }
 
     }
 }

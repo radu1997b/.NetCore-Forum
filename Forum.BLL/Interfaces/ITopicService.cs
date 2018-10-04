@@ -13,5 +13,7 @@ namespace Forum.BLL.Interfaces
         void CreateTopic(string TopicName);
         void Update(TopicDTO topic);
         void Delete(long id);
+        IList<TopicListItemDTO> GetAllTopics();
+        TopicInfoDTO GetTopicInfo(long Id);
     }
 }
