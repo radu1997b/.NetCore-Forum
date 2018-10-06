@@ -1,11 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Cross_cutting.Extensions
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/site.css" />
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous"></script>
@@ -26,14 +25,10 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css" />
         <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
-
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+        @RenderSection("Stylesheets", required:false)
+        <environment include="Development">
+            <link href="~/css/Shared/Navbar.css" rel="stylesheet"/>
+        </environment>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -48,10 +43,15 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Forum</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" id="item-list">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-controller="Room" asp-action="AllRooms">Rooms</a></li>
+                    <li><a asp-controller="Topic" asp-action="Index">Topics</a></li>
+                    <li id="create-room-item"><a asp-area="" asp-controller="Room" asp-action="CreateRoom">Create Room</a></li>
+                    @if (User.IsAdmin())
+                    {
+                        <li id="admin-page-item"><a asp-area="AdminPanel" asp-controller="Admin" asp-action="Topic">Admin Page</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

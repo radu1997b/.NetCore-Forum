@@ -4,8 +4,9 @@
 <div class="row post">
     <div class="col-sm-3" style="padding:10px;text-align:center;">
         <img style="margin:auto;border-radius:50px" width="100" height="100" src="@Model.UserPhotoPath" class="img-responsive" />
-        <div id="user-name">@Model.AuthorFullName</div>
-        <div class="text-info">Owner</div>
+        <a asp-controller="Profile" asp-action="ProfileInfo" asp-route-Id="@Model.AuthorId">
+            <div id="user-name">@Model.AuthorFullName</div>
+        </a>
         <br />
         <div id="num-of-posts" class="text-primary">Number of Posts:@Model.AuthorNumberOfPosts</div>
         <div id="email" class="text-primary">Email:@Model.AuthorEmail</div>

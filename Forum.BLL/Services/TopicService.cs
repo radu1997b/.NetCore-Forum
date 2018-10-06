@@ -1,18 +1,11 @@
 ﻿using Forum.BLL.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 using Forum.DAL.Domain;
 using Forum.DAL.Repository;
 using Forum.BLL.DataTransferObjects.Topic;
-using Forum.BLL.Extensions;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using System.Text.RegularExpressions;
-using System;
 using Cross_cutting.PageHelperClasses;
-using Cross_cutting.Exceptions;
-using System.Net;
+
 
 namespace Forum.BLL.Services
 {
@@ -50,7 +43,7 @@ namespace Forum.BLL.Services
         {
             var oldTopic = _repository.GetById(topic.Id);
             if (oldTopic == null)
-                throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "Resource not found");
+                throw new KeyNotFoundException();
             _mapper.Map(topic, oldTopic);
             _repository.Update(oldTopic);
             _repository.Save();
@@ -64,7 +57,7 @@ namespace Forum.BLL.Services
                 _repository.Save();
                 return;
             }
-            throw new HttpStatusCodeException((int)HttpStatusCode.NotFound,"Resource not found");
+            throw new KeyNotFoundException();
         }
         public IList<TopicListItemDTO> GetAllTopics()
         {

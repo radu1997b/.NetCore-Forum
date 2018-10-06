@@ -1,32 +1,34 @@
-﻿@using System.Collections.Generic
-@using System.Linq
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Http.Authentication
-@model LoginViewModel
-@inject SignInManager<User> SignInManager
-
+﻿@model LoginViewModel
 @{
     ViewData["Title"] = "Log in";
 }
-<link href="@Url.Content("~/css/Account/RegisterLoginForms.css")" rel="stylesheet" type="text/css" />
+<environment include="Development">
+    <link href="@Url.Content("~/css/Account/RegisterLoginForms.css")" rel="stylesheet" type="text/css" />
+</environment>
+<environment exclude="Development">
+    @section Stylesheets{ 
+        <link href="@Url.Content("~/css/Form.min.css")" rel="stylesheet" type="text/css" />
+    }
+</environment>
 
 <div class="container" id="form-container">
     <div class="row">
         <div class="col-sm-12 text-center">
-            <p id="sign-up-text">@ViewData["Title"]</p>
+            <p id="sign-up-text">Sign Up</p>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12 text-center">
             <div asp-validation-summary="All" class="error-messages text-danger"></div>
-            <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-                
+            <form method="post">
+
                 <span asp-validation-for="Email" class="text-danger"></span>
-                <input asp-for="Email" placeholder="Email" autocomplete="off"/>
+                <input asp-for="Email" placeholder="Email" autocomplete="off" />
                 <span asp-validation-for="Password" class="text-danger"></span>
-                <input asp-for="Password" placeholder="Password" autocomplete="off"/>
-                <div>
-                    <input asp-for="RememberMe" value="Log In"/><span> Remeber me</span>
+                <input asp-for="Password" placeholder="Password" autocomplete="off" />
+                <div id="remember-me">
+                    <label asp-for="RememberMe"></label>&nbsp;
+                    <input asp-for="RememberMe" />
                 </div>
                 <input type="submit" id="submit-btn" />
             </form>
@@ -34,7 +36,15 @@
     </div>
 </div>
 
-<script src="~/js/Account/FormManipulation.js"></script>
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+<environment include="Development">
+    @section Scripts {
+        <script src="~/js/Account/FormManipulation.js"></script>
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+</environment>
+<environment exclude="Development">
+    @section Scripts {
+        <script src="~/js/Account/FormManipulation.min.js"></script>
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+</environment>

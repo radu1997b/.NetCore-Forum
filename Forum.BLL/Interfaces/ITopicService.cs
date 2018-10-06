@@ -1,4 +1,5 @@
-﻿using Cross_cutting.PageHelperClasses;
+﻿using Cross_cutting.Interfaces;
+using Cross_cutting.PageHelperClasses;
 using Forum.BLL.DataTransferObjects.Topic;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Forum.BLL.Interfaces
 {
-    public interface ITopicService
+    public interface ITopicService : IScopedService
     {
         PagedResult<TopicDTO> GetTopicsPage(PagedRequestDescription pagedRequestDescription);
         void CreateTopic(string TopicName);

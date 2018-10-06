@@ -2,25 +2,110 @@
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
   {
-    "outputFileName": "wwwroot/css/site.min.css",
-    // An array of relative input file paths. Globbing patterns supported
+    "outputFileName": "wwwroot/css/ProfileInfo/ProfileInfo.min.css",
     "inputFiles": [
       "wwwroot/css/ProfileInfo/ProfileInfo.css",
-      "wwwroot/css/ProfileInfo/UpdateProfile.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/site.min.js",
-    "inputFiles": [
-      "wwwroot/js/site.js",
-      "wwwroot/js/Account/SubmitForm",
+      "wwwroot/css/Shared/*"
     ],
-    // Optionally specify minification options
     "minify": {
       "enabled": true,
       "renameLocals": true
-    },
-    // Optionally generate .map file
-    "sourceMap": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/ProfileInfo/UpdateProfile.min.css",
+    "inputFiles": [
+      "wwwroot/css/ProfileInfo/UpdateProfile.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/UpdateProfile/UpdateProfile.min.js",
+    "inputFiles": [
+      "wwwroot/js/UpdateProfile/UpdateProfile.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Room/CreateRoom.min.css",
+    "inputFiles": [
+      "wwwroot/css/Room/CreateRoom.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Room/RoomStyle.min.css",
+    "inputFiles": [
+      "wwwroot/css/Room/RoomStyle.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Room/Room.min.js",
+    "inputFiles": [
+      "wwwroot/js/Room/PageHelper.js",
+      "wwwroot/js/Room/EditorConfig.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Form.min.css",
+    "inputFiles": [
+      "wwwroot/css/Account/RegisterLoginForms.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Account/FormManipulation.min.js",
+    "inputFiles": [
+      "wwwroot/js/Account/FormManipulation.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Home/HomeTableManipulation.min.js",
+    "inputFiles": [
+      "wwwroot/js/Home/HomeTableManipulation.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Home/HomeStyle.min.css",
+    "inputFiles": [
+      "wwwroot/css/Home/HomeStyle.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
 ]

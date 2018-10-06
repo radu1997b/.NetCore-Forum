@@ -1,47 +1,14 @@
 ﻿@model RoomViewModel
-<script src="https://cdn.ckeditor.com/4.10.1/full-all/ckeditor.js"></script>
-<script src="~/js/cookies.js"></script>
 
-<style>
-    #room-container .post {
-        background-color: antiquewhite;
-        margin-top: 20px;
-        border-radius: 50px;
-    }
+<environment include="Development">
+    <link rel="stylesheet" href="~/css/Room/RoomStyle.css"/>
+</environment>
 
-    #user-name {
-        color: red;
+<environment exclude="Development">
+    @section Stylesheets{ 
+        <link rel="stylesheet" href="~/css/Room/RoomStyle.min.css"/>
     }
-
-    #topic-info {
-        width: 100%;
-        background-color: yellow;
-        font-size: 2em;
-        font-family: 'Arial';
-        text-align: center;
-        margin-top: 20px;
-        border-radius: 20px;
-        margin-bottom: 20px;
-    }
-
-    #post-btn {
-        width: 150px;
-        height: 25px;
-        margin-top: 10px;
-        position: relative;
-        font-size: 1.5em;
-        vertical-align: middle;
-        padding-bottom: 30px;
-    }
-
-    #post-btn-wrapper {
-        text-align: center;
-    }
-
-    #pagination-container{
-        float:right;
-    }
-</style>
+</environment>
 
 <div class="container" id="room-container">
     <div class="row" id="topic-info">
@@ -80,65 +47,16 @@
     <button id="post-btn" class="btn-success" onclick="SendPost()">Post</button>
 </div>
 
-
-<script>
-
-    let page = window.location.pathname.split('/').pop();
-    let lastPage = $("#pagination-container li").last().prev().text();
-    if (page == 1)
-        $("#prev-page").addClass("disabled");
-    if (page == lastPage)
-        $("#next-page").addClass("disabled");
-</script>
-
-
-<script>
-    
-    $(document).ready(() => { 
-        CKEDITOR.editorConfig = function (config) {
-            config.toolbarGroups = [
-                { name: 'document', groups: ['mode', 'document', 'doctools'] },
-                { name: 'clipboard', groups: ['clipboard', 'undo'] },
-                { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-                { name: 'forms', groups: ['forms'] },
-                '/',
-                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-                { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-                { name: 'links', groups: ['links'] },
-                { name: 'insert', groups: ['insert'] },
-                '/',
-                { name: 'styles', groups: ['styles'] },
-                { name: 'colors', groups: ['colors'] },
-                { name: 'tools', groups: ['tools'] },
-                { name: 'others', groups: ['others'] },
-                { name: 'about', groups: ['about'] }
-            ];
-
-            config.removeButtons = 'Save,NewPage,Preview,Print,Templates,PasteFromWord,PasteText,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,RemoveFormat,CopyFormatting,CreateDiv,Image,Flash,HorizontalRule,PageBreak,Iframe,ShowBlocks';
-        };
-        CKEDITOR.replace('editor');
-        
-    });
-    var SendPost = () => {
-        $("#post-status").text("Loading...");
-        $.ajax({
-            url: "/Post/CreatePost",
-            type: "POST",
-            data: {
-                RoomId: parseInt(window.location.pathname.split('/').pop()),
-                Message: CKEDITOR.instances['editor'].getData()
-            },
-            success: onSucces,
-            error: onFailure,
-            complete: () => { $("#post-status").text(""); }
-        });
-    };
-
-    var onSucces = () => {
-        console.log("adas");
-        location.reload();
+<environment include="Development">
+    @section Scripts{
+        <script src="https://cdn.ckeditor.com/4.10.1/full-all/ckeditor.js"></script>
+        <script src="~/js/Room/PageHelper.js"></script>
+        <script src="~/js/Room/EditorConfig.js"></script>
     }
-    var onFailure = () => {
-        alert("Message doesn't meet requerements");
+</environment>
+<environment exclude="Development">
+    @section Scripts{
+        <script src="https://cdn.ckeditor.com/4.10.1/full-all/ckeditor.js"></script>
+        <script src="~/js/Room/Room.min.js"></script>
     }
-</script>
+</environment>

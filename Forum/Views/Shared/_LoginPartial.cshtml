@@ -1,14 +1,11 @@
-@using Microsoft.AspNetCore.Identity
+@using Cross_cutting.Extensions
+<environment include="Development">
+    <link rel="stylesheet" href="~/css/Shared/UserProfileButton.css" />
+</environment>
 
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
-
-<link rel="stylesheet" href="~/css/Shared/UserProfileButton.css" />
-
-@if (SignInManager.IsSignedIn(User))
+@if (User.Identity.IsAuthenticated)
 {
-    var user = await UserManager.GetUserAsync(User);
-    var FullName = user.FirstName + " " + user.LastName;
+    var FullName = User.Identity.Name;
     var LetterPath = "/images/Letters/" + FullName.First().ToString().ToUpper() + ".svg";
 
     <ul class="nav navbar-nav navbar-right">
@@ -19,7 +16,7 @@
                 <i class="fa fa-angle-down" style="padding-top:15px;"></i>
             </a>
             <ul class="dropdown-menu">
-                <li><a asp-controller="Profile" asp-action="ProfileInfo" asp-route-id="@UserManager.GetUserId(User)">View Profile Page</a></li>
+                <li><a asp-controller="Profile" asp-action="ProfileInfo" asp-route-id="@User.GetUserId()">View Profile Page</a></li>
                 <li><a onclick="$('#logout-form').submit()"><form id="logout-form" asp-controller="Account" asp-action="Logout" method="post">Log Out</form></a></li>
             </ul>
         </li>

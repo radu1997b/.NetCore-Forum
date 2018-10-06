@@ -12,48 +12,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Cross_cutting.PageHelperClasses;
+using Forum.Web.Controllers;
 
 namespace Forum.Web.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
     [Authorize(Roles = "Admin,Owner")]
-    public class AdminController : Controller
+    public class AdminController : TopicController
     {
-        UserManager<User> _userManager;
-        RoleManager<IdentityRole> _roleManager;
-        ITopicService _topicService;
-        IMapper _mapper;
-        public AdminController(UserManager<User> userManager,
-                               RoleManager<IdentityRole> roleManager,
-                               ITopicService topicService,
-                               IMapper mapper
-                               )
-        {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _topicService = topicService;
-            _mapper = mapper;
-        }
-        public IActionResult Index()
+        public AdminController(ITopicService topicService, IMapper mapper)
+            : base(topicService, mapper)
+        {   }
+        public IActionResult Topic()
         {
             return View();
-        }
-
-        //TODO Create c class for data table params PagedRequestDescription for example
-        //TODO Default values should be set when Data Table is created
-        //TODO Create PaginatedList that will be sent in JSON
-        [HttpGet]
-        public IActionResult LoadTopics(PagedRequestDescription pagedRequestDescription)
-        {
-            
-            var topicsDTO = _topicService.GetTopicsPage(pagedRequestDescription);
-            var result = new
-            {
-                recordsTotal = topicsDTO.AllItemsCount,
-                recordsFiltered = topicsDTO.AllItemsCount,
-                data = _mapper.Map<ICollection<TopicDTO>, ICollection<TopicViewModel>>(topicsDTO.result)
-            };
-            return Json(result);
         }
         [HttpDelete]
         public ActionResult DeleteTopic(long id)
@@ -67,7 +39,7 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
         
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid attempt to create a new resource");
+                AddErrors("Invalid attempt to create a new resource");
                 return RedirectToAction(nameof(Index));
             }
             _topicService.CreateTopic(model.TopicName);
@@ -78,7 +50,7 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid attempt to update resource");
+                AddErrors("Invalid attempt to update resource");
                 return RedirectToAction(nameof(Index));
             }
             var dto = _mapper.Map<TopicUpdateViewModel, TopicDTO>(model);

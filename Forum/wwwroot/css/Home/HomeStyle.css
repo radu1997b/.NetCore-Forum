@@ -1,0 +1,21 @@
+﻿.table-name {
+    font-family: 'Segoe Script';
+}
+
+.room-table-titles {
+    font-size: 1.5em;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    border: 2px solid red;
+    color: deepskyblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table-row {
+    border: 2px solid red;
+    border-top: 0px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: #ffffff;
+}
+

@@ -1,5 +1,5 @@
 ﻿.update-row {
-    background-color: #8ae0f2;
+    background-color: chartreuse;
     margin-top: 20px;
     margin-bottom: 20px;
     padding-top: 20px;
@@ -17,3 +17,29 @@
 #input[type='submit']{
     margin:auto;
 }
+
+input[type='file']{
+    margin:auto;
+    margin-top:100px;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#page-title{
+    font-family: 'Segoe Script';
+    font-size: 2em;
+    margin-top:10px;
+}
+
+ul{
+    list-style:none;
+}
+

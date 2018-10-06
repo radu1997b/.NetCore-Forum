@@ -9,7 +9,7 @@ namespace Forum.DAL.Repository
 {
     public interface IPostRepository : IRepository<Post>
     {
-        PagedResult<Post> GetPostsPaginated(Expression<Func<Post, bool>> filter,
+        PagedResult<Post> GetPostsPaginated(long RoomId,
                                             int page);
     }
 }

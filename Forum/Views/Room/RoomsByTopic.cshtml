@@ -1,5 +1,34 @@
 ﻿@model TopicInfoViewModel
 
+<style>
+    td {
+        border-top: 2px solid red !important;
+        padding-bottom: 10px !important;
+        padding-top: 10px !important;
+    }
+
+    tr:last-child td {
+        border-top: 2px solid red !important;
+        border-bottom: 2px solid red !important;
+    }
+
+    tr td:last-child {
+        border-right: 2px solid red !important;
+    }
+
+    tr td:first-child {
+        border-left: 2px solid red !important;
+    }
+
+    thead {
+        font-size: 1.5em;
+        padding-top: 5px;
+        padding-bottom: 2px;
+        border: 2px solid red;
+        color: deepskyblue;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+</style>
 
 <div class="text-center">
      <div>Topic Name: @Model.TopicName</div>

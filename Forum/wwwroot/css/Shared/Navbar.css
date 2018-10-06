@@ -1,0 +1,15 @@
+﻿#create-room-item{
+    background-color:lightgreen;
+}
+
+#create-room-item a{
+    color:black;
+}
+
+#admin-page-item{
+    background-color:orangered;
+}
+
+#admin-page-item a{
+    color:black;
+}

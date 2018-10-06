@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.AspNetCore;
 using Serilog.Sinks.File;
 using Serilog;
+using Cross_cutting.Interfaces;
 
 namespace Forum.Web
 {
@@ -38,26 +39,16 @@ namespace Forum.Web
                .UseLazyLoadingProxies()
                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                                     b => b.MigrationsAssembly("Forum.DAL")));
-
+            services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            
-            services.AddScoped<DbContext, ApplicationDbContext>();
-            services.AddScoped(typeof(IEmailSender), typeof(EmailSender));
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<ITopicService, TopicService>();
-            services.AddScoped<ITopicRepository, TopicRepository>();
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IRoomService, RoomService>();
-            services.AddScoped<IPostService, PostService>();
-            services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
-            services.AddScoped<ISubscriptionService, SubscriptionService>();
-            services.AddScoped<IRoomRepository, RoomRepository>();
-            services.AddScoped<IPhotoService, PhotoService>();
+            services.Scan(scan => scan.FromAssembliesOf(typeof(IRoomService),typeof(IRepository<>))
+                          .AddClasses(classes => classes.AssignableTo<IScopedService>())
+                          .AsImplementedInterfaces()
+                          .WithScopedLifetime());
             services.Configure<IdentityOptions>(options =>
             {
-                // Default Password settings.
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
@@ -67,14 +58,12 @@ namespace Forum.Web
             });
             services.AddMvc(opt => opt.Filters.Add(typeof(ErrorHandlerAttribute)))
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-            services.AddAutoMapper(x => x.AddProfile(new MapperProfile()));
+            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment env,
-            RoleManager<IdentityRole> roleManager,
-            UserManager<User> userManager)
+                              IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

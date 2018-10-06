@@ -19,7 +19,7 @@
     <div class="text-capitalize">Create Topic</div>
     <form asp-action="CreateTopic" method="post">
         <span asp-validation-for="TopicName"></span>
-        <input asp-for="TopicName" style="display:block;"/>
+        <input asp-for="TopicName" style="display:block;" autocomplete="off"/>
         <input id="create-topic-submit-btn" class="btn btn-sm" type="submit" style="display:block;"/>
     </form>
 </div>

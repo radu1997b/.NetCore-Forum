@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Forum.Web.Controllers
 {
     [Authorize]
-    public class SubscriptionsController : Controller
+    public class SubscriptionsController : BaseController
     {
         private ISubscriptionService _subscriptionService;
         public SubscriptionsController(ISubscriptionService subscriptionService)
@@ -22,25 +22,13 @@ namespace Forum.Web.Controllers
         public IActionResult Subscribe(long Id)
         {
             var userId = HttpContext.User.GetUserId();
-            var subscritpionDto = new SubscriptionsDTO
-            {
-                RoomId = Id,
-                UserId = userId
-            };
-            //TODO Pass here two params
-            _subscriptionService.Subscribe(subscritpionDto);
+            _subscriptionService.Subscribe(userId,Id);
              return RedirectToAction("GetRoom", "Room", new { Id });
         }
         public IActionResult UnSubscribe(long Id)
         {
             var userId = HttpContext.User.GetUserId();
-            var subscriptionDto = new SubscriptionsDTO
-            {
-                RoomId = Id,
-                UserId = userId
-            };
-            //TODO Pass here two params
-            _subscriptionService.UnSubscribe(subscriptionDto);
+            _subscriptionService.UnSubscribe(userId,Id);
             return RedirectToAction("GetRoom", "Room", new { Id });
         }
     }

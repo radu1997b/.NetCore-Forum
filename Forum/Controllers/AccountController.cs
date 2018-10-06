@@ -12,39 +12,32 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Forum.Web.Controllers;
-using Forum.BLL.Extensions;
 
 namespace Forum.Web
 {
     [Authorize]
-    [Route("[controller]/[action]")]
     public class AccountController : BaseController
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
             _logger = logger;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login()
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
         [HttpPost]
@@ -62,8 +55,6 @@ namespace Forum.Web
                 AddErrors("Invalid login attempt!");
                 return View(model);
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
         [HttpGet]

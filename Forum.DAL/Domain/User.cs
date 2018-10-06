@@ -12,7 +12,7 @@ namespace Forum.DAL.Domain
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public string UserPhotoPath { get; set; } = "~//wwwroot//images//NoImage.jpg";
+        public string UserPhotoPath { get; set; } = "~/wwwroot/images/NoImage.jpg";
         public virtual ICollection<UserRoom> UserRooms { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
     }

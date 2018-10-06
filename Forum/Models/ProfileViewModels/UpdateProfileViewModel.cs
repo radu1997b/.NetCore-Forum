@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Cross_cutting.Attributes;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,7 @@ namespace Forum.Web.Models.ProfileViewModels
     {
         public string Id { get; set; }
         public string UserPhotoPath { get; set; }
+        [Photo(ErrorMessage = "File extension must be jpg,jpeg or png")]
         public IFormFile ImageInfo { get; set; }
         [MaxLength(30)]
         [Required]

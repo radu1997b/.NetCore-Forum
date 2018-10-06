@@ -7,10 +7,11 @@ using Forum.DAL.Domain;
 using Forum.DAL.Configs;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Cross_cutting.Interfaces;
 
 namespace Forum.DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User>,IScopedService
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

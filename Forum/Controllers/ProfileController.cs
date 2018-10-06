@@ -11,9 +11,11 @@ using Forum.DAL.Domain;
 using Forum.BLL.Interfaces;
 using Cross_cutting.Exceptions;
 using System.Net;
+using Cross_cutting.Extensions;
 
 namespace Forum.Web.Controllers
 {
+    [Authorize]
     public class ProfileController : BaseController
     {
         private UserManager<User> _userManager;
@@ -25,25 +27,22 @@ namespace Forum.Web.Controllers
             _photoService = photoService;
             _mapper = mapper;
         }
-        [Authorize]
         public async Task<IActionResult> ProfileInfo(string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);
             if(user == null)
-                throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "User not found");
+                throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "Resource not found");
             var model = _mapper.Map<User, ProfileViewModel>(user);
             model.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-            if (model.Role == null)
-                model.Role = "Simple User";
+            model.IsHisAccount = Id == User.GetUserId();
             return View(model);
         }
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> UpdateProfile(string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);
             if (user == null)
-                throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "User not found");
+                throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "Resource not found");
             var currentUserId = _userManager.GetUserId(User);
             if (user != null && user.Id != currentUserId)
                 throw new HttpStatusCodeException((int)HttpStatusCode.Unauthorized, "You can't access this resource!");
@@ -52,15 +51,15 @@ namespace Forum.Web.Controllers
             return View(userModel);
         }
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateProfile(UpdateProfileViewModel model,string Id)
         {
+            var user = await _userManager.FindByIdAsync(Id);
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(ProfileController.UpdateProfile), new { Id });
+                model.UserPhotoPath = user.UserPhotoPath;
+                return View(model);
             }
-            var user = await _userManager.FindByIdAsync(Id);
             _mapper.Map(model, user);
             var photoPath = (await _photoService.AddImage(model.ImageInfo));
             if (photoPath != null)

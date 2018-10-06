@@ -16,7 +16,7 @@
     <div class="text-capitalize">Updating Topic</div>
     <form asp-action="UpdateTopic" method="post">
         <span asp-validation-for="TopicName"></span>
-        <input asp-for="TopicName" type="text" />
+        <input asp-for="TopicName" type="text" autocomplete="off"/>
         <input type="submit" class="btn btn-sm" />
         <input asp-for="Id" type="hidden"/>
     </form>

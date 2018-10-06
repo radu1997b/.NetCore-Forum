@@ -154,8 +154,6 @@ namespace Forum.DAL.Migrations
 
                     b.HasKey("UserId", "RoomId");
 
-                    b.HasAlternateKey("Id");
-
                     b.HasIndex("RoomId");
 
                     b.ToTable("UserRoom");

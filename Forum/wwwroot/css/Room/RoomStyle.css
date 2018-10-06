@@ -1,0 +1,39 @@
+﻿
+#room-container .post {
+    background-color: antiquewhite;
+    margin-top: 20px;
+    border-radius: 50px;
+}
+
+#user-name {
+    color: red;
+}
+
+#topic-info {
+    width: 100%;
+    background-color: yellow;
+    font-size: 2em;
+    font-family: 'Arial';
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+#post-btn {
+    width: 150px;
+    height: 25px;
+    margin-top: 10px;
+    position: relative;
+    font-size: 1.5em;
+    vertical-align: middle;
+    padding-bottom: 30px;
+}
+
+#post-btn-wrapper {
+    text-align: center;
+}
+
+#pagination-container {
+    float: right;
+}

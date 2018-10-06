@@ -29,16 +29,28 @@ namespace Forum.BLL.Services
             return true;
         }
 
-        public void Subscribe(SubscriptionsDTO subscription)
+        public void Subscribe(string UserId,long RoomId)
         {
-            var subscriptionDomain = _mapper.Map<SubscriptionsDTO, UserRoom>(subscription);
-            _repository.Add(subscriptionDomain);
+            if (GetSubscriptionStatusForUser(UserId, RoomId) == true)
+                throw new ArgumentException();
+            var subscription = new UserRoom
+            {
+                UserId = UserId,
+                RoomId = RoomId
+            };
+            _repository.Add(subscription);
             _repository.Save();
         }
-        public void UnSubscribe(SubscriptionsDTO subscription)
+        public void UnSubscribe(string UserId,long RoomId)
         {
-            var subscriptionDomain = _mapper.Map<SubscriptionsDTO, UserRoom>(subscription);
-            _repository.Delete(subscriptionDomain);
+            if (GetSubscriptionStatusForUser(UserId, RoomId) == false)
+                throw new ArgumentException();
+            var subscription = new UserRoom
+            {
+                UserId = UserId,
+                RoomId = RoomId
+            };
+            _repository.Delete(subscription);
             _repository.Save();
         }
     }

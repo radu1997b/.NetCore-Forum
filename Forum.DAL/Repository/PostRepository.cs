@@ -14,10 +14,10 @@ namespace Forum.DAL.Repository
     {
         public PostRepository(DbContext context) : base(context)
         { }
-        public PagedResult<Post> GetPostsPaginated(Expression<Func<Post, bool>> filter, 
+        public PagedResult<Post> GetPostsPaginated(long RoomId, 
                                                    int page)
         {
-            var result = _context.Set<Post>().Where(filter).Page(page, 10);
+            var result = _context.Set<Post>().Where(p => p.RoomId == RoomId).Page(page, 10);
             return result;
         }
     }

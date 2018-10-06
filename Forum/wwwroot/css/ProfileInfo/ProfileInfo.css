@@ -45,17 +45,6 @@
     margin: 5px 0px 5px 0px;
 }
 
-#user-tabs {
-    font-size: 1.5em;
-    color: black;
-}
-
-    #user-tabs > div {
-        border: 3px solid black;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
 #favorites {
     background-color: #ff7c7c;
 }

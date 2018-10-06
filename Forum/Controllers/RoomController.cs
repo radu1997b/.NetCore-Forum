@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using Cross_cutting.ExceptionHandlingFilter;
-using Cross_cutting.Exceptions;
 using Cross_cutting.Extensions;
 using Cross_cutting.PageHelperClasses;
 using Forum.BLL.DataTransferObjects.Post;
 using Forum.BLL.DataTransferObjects.Room;
-using Forum.BLL.DataTransferObjects.Subscriptions;
 using Forum.BLL.DataTransferObjects.Topic;
 using Forum.BLL.Interfaces;
 using Forum.Web.Models.PostViewModels;
 using Forum.Web.Models.RoomViewModels;
 using Forum.Web.Models.TopicViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Forum.Web.Controllers
 {
+    [Authorize]
     public class RoomController : BaseController
     {
         private IRoomService _roomService;
@@ -45,7 +39,7 @@ namespace Forum.Web.Controllers
             var result = _mapper.Map<RoomDTO, RoomViewModel>(roomDetails);
             var userId = HttpContext.User.GetUserId();
             result.IsSubscribed = _subscriptionService.GetSubscriptionStatusForUser(userId,Id);
-            var getPostsPaginated = _postService.GetPostsPaginated(p => p.RoomId == Id, page);
+            var getPostsPaginated = _postService.GetPostsPaginated(Id, page);
             result.PostList = _mapper.Map<IList<PostDTO>, IList<PostViewModel>>(getPostsPaginated.result);
             return View(result);
         }
@@ -55,7 +49,7 @@ namespace Forum.Web.Controllers
             var allTopics = _topicService.GetAllTopics();
             var model = new CreateRoomViewModel
             {
-                ListOfTopics = _mapper.Map<IEnumerable<TopicListItemDTO>, IEnumerable<SelectListItem>>(allTopics)
+                ListOfTopics = allTopics.ToSelectList(0, false, x => x.Id, x => x.TopicName)
             };
             return View(model);
         }
@@ -83,6 +77,23 @@ namespace Forum.Web.Controllers
         public IActionResult GetRoomsByTopic(long TopicId,PagedRequestDescription pagedRequestDescription)
         {
             var roomsPaginated = _roomService.GetRoomsByTopic(TopicId, pagedRequestDescription);
+            var result = new
+            {
+                recordsTotal = roomsPaginated.AllItemsCount,
+                recordsFiltered = roomsPaginated.AllItemsCount,
+                data = roomsPaginated.result
+            };
+            return Json(result);
+        }
+        [HttpGet]
+        public IActionResult AllRooms()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AllRoomsJson(PagedRequestDescription pagedRequestDescription)
+        {
+            var roomsPaginated = _roomService.GetRoomsPaginated(pagedRequestDescription);
             var result = new
             {
                 recordsTotal = roomsPaginated.AllItemsCount,

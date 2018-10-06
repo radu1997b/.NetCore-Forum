@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using Cross_cutting.Exceptions;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Cross_cutting.ExceptionHandlingFilter
 {
@@ -31,6 +28,18 @@ namespace Cross_cutting.ExceptionHandlingFilter
                 var exception = context.Exception as HttpStatusCodeException;
                 context.HttpContext.Response.StatusCode = exception.StatusCode;
                 message = exception.Message;
+            }
+            else if (context.Exception is ArgumentOutOfRangeException)
+            {
+                var exception = context.Exception as ArgumentOutOfRangeException;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                message = "No content";
+            }
+            else if(context.Exception is KeyNotFoundException)
+            {
+                var exception = context.Exception as KeyNotFoundException;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                message = "Resource not found";
             }
             else
             {

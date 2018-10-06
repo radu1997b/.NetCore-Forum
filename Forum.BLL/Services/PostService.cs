@@ -15,20 +15,25 @@ namespace Forum.BLL.Services
     {
         private IPostRepository _repository;
         private IMapper _mapper;
-        public PostService(IPostRepository repository,IMapper mapper)
+        private UserManager<User> _userManager;
+        public PostService(IPostRepository repository,IMapper mapper,UserManager<User> userManager)
         {
             _repository = repository;
             _mapper = mapper;
+            _userManager = userManager;
         }
-        public PagedResult<PostDTO> GetPostsPaginated(Expression<Func<Post, bool>> filter, 
+        public PagedResult<PostDTO> GetPostsPaginated(long RoomId,
                                                       int page)
         {
-           var postsFiltered = _repository.GetPostsPaginated(filter, page);
+           var postsFiltered = _repository.GetPostsPaginated(RoomId, page);
             var result = new PagedResult<PostDTO>
             {
                 AllItemsCount = postsFiltered.AllItemsCount,
                 result = _mapper.Map<IList<Post>, IList<PostDTO>>(postsFiltered.result)
             };
+            var pageDoesntExists = (page - 1) * 10 >= result.AllItemsCount && page != 1;
+            if (pageDoesntExists || page < 1)
+                throw new ArgumentOutOfRangeException(nameof(page));
             return result;
         }
         public void AddPost(CreatePostDTO post)

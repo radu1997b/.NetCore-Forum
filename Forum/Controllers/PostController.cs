@@ -9,11 +9,13 @@ using Cross_cutting.PageHelperClasses;
 using Forum.BLL.DataTransferObjects.Post;
 using Forum.BLL.Interfaces;
 using Forum.Web.Models.PostViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Web.Controllers
 {
-    public class PostController : Controller
+    [Authorize]
+    public class PostController : BaseController
     {
         private IPostService _postService;
         private IMapper _mapper;

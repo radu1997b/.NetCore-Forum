@@ -1,0 +1,19 @@
+﻿@model RoomPartialViewModel
+
+<div class="row table-row">
+    <div class="col-xs-6">
+        <a asp-controller="Room" asp-action="GetRoom" asp-route-Id="@Model.RoomId">
+            @Model.RoomName
+        </a>
+    </div>
+    <div class="col-xs-2">
+        @Model.TopicName
+    </div>
+    <div class="col-xs-2">
+        @Model.NumberOfPosts
+    </div>
+    <div class="col-xs-2">
+        @Model.CreationDate.Date.ToString("dd/MM/yyyy")
+    </div>
+</div>
+
