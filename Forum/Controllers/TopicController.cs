@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Cross_cutting.PageHelperClasses;
 using Forum.BLL.DataTransferObjects.Topic;
@@ -20,6 +17,7 @@ namespace Forum.Web.Controllers
             _topicService = topicService;
             _mapper = mapper;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

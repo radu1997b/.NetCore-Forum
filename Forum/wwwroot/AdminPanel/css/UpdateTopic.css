@@ -1,0 +1,14 @@
+﻿#update-topic {
+    width: inherit;
+    text-align:center;
+}
+
+#update-topic div {
+    text-align: center;
+}
+
+#update-topic input {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

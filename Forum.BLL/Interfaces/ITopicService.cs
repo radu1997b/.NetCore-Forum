@@ -1,10 +1,7 @@
 ﻿using Cross_cutting.Interfaces;
 using Cross_cutting.PageHelperClasses;
 using Forum.BLL.DataTransferObjects.Topic;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Forum.BLL.Interfaces
 {

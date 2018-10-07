@@ -1,20 +1,5 @@
 ﻿@model Forum.Web.Areas.AdminPanel.Models.AdminViewModels.TopicCreateViewModel;
 
-<style>
-    #create-topic-submit-btn{
-        margin:auto;
-        margin-top:10px;
-    }
-    #create-form input[type="text"]{
-        margin:auto;
-        margin-top:10px;
-    }
-    #create-form div{
-        text-align:center;
-        font-size:1.5em;
-    }
-</style>
-
 <div id="create-form" class="container" style="width:inherit;">
     <div class="text-capitalize">Create Topic</div>
     <form asp-action="CreateTopic" method="post">

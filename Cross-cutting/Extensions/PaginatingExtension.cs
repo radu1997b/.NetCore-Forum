@@ -4,25 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Forum.DAL.Extensions
+namespace Cross_cutting.Extensions
 {
-    static class PaginatingExtension
+    public static class PaginatingExtension
     {
         public static PagedResult<T> Page<T>(this IQueryable<T> list,PagedRequestDescription description)
         {
             if (description.searchKeyword == null)
                 description.searchKeyword = "";
-            var pagedResult = new PagedResult<T>
-            {
-                AllItemsCount = list.Count(),
-                result = list
-                    .Where(p => p.GetType().GetProperty(description.columnToSearch).GetValue(p).ToString().StartsWith(description.searchKeyword))
-                    .OrderBy(p => p.GetType().GetProperty(description.columnToSort))
-                    .Skip((description.numPage - 1) * description.pageSize)
-                    .Take(description.pageSize)
-                    .ToList()
-            };
-            VerifyIfPageExists(description.numPage, pagedResult.AllItemsCount);
+            var query = list.Where(p => p.GetType().GetProperty(description.columnToSearch).GetValue(p).ToString().StartsWith(description.searchKeyword));
+            if (description.order.Equals("asc", StringComparison.InvariantCultureIgnoreCase))
+                query = query.OrderBy(p => p.GetType().GetProperty(description.columnToSort));
+            else
+                query = query.OrderByDescending(p => p.GetType().GetProperty(description.columnToSort));
+            var pagedResult = query.Page(description.numPage, description.pageSize);
             return pagedResult;
         }
         public static PagedResult<T> Page<T>(this IQueryable<T> list,int page,int pageSize)
@@ -33,6 +28,7 @@ namespace Forum.DAL.Extensions
                 AllItemsCount = list.Count(),
                 result = list.Skip((page - 1) * pageSize).Take(pageSize).ToList()
             };
+            pagedResult.NumberOfPages = GetNumberOfPages(pagedResult.AllItemsCount,pageSize);
             VerifyIfPageExists(page, pagedResult.AllItemsCount);
             return pagedResult;
         }
@@ -42,6 +38,12 @@ namespace Forum.DAL.Extensions
             var pageDoesntExists = (page - 1) * 10 >= Count && page != 1;
             if (pageDoesntExists || page < 1)
                 throw new ArgumentOutOfRangeException(nameof(page));
+        }
+        private static int GetNumberOfPages(int NumberOfPosts,int pageSize)
+        {
+            if (NumberOfPosts % pageSize == 0)
+                return NumberOfPosts / pageSize;
+            return NumberOfPosts / pageSize + 1;
         }
     }
 }

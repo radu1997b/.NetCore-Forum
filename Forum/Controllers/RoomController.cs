@@ -40,7 +40,9 @@ namespace Forum.Web.Controllers
             var userId = HttpContext.User.GetUserId();
             result.IsSubscribed = _subscriptionService.GetSubscriptionStatusForUser(userId,Id);
             var getPostsPaginated = _postService.GetPostsPaginated(Id, page);
+            result.NumberOfPages = getPostsPaginated.NumberOfPages;
             result.PostList = _mapper.Map<IList<PostDTO>, IList<PostViewModel>>(getPostsPaginated.result);
+            result.CurrentPage = page;
             return View(result);
         }
         [HttpGet]
@@ -60,7 +62,7 @@ namespace Forum.Web.Controllers
             if (!ModelState.IsValid)
             {
                 AddErrors("Error on creating room!");
-                return RedirectToAction(nameof(RoomController.CreateRoom));
+                return View();
             }
             var roomDto = _mapper.Map<CreateRoomViewModel, CreateRoomDTO>(model);
             _roomService.CreateRoom(roomDto);
@@ -73,6 +75,7 @@ namespace Forum.Web.Controllers
             var model = _mapper.Map<TopicInfoDTO, TopicInfoViewModel>(topicInfoDto);
             return View(model);
         }
+        //Used by datatable
         [HttpGet]
         public IActionResult GetRoomsByTopic(long TopicId,PagedRequestDescription pagedRequestDescription)
         {
@@ -90,6 +93,7 @@ namespace Forum.Web.Controllers
         {
             return View();
         }
+        //Used by datatable
         [HttpGet]
         public IActionResult AllRoomsJson(PagedRequestDescription pagedRequestDescription)
         {

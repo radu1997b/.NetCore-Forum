@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,14 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Forum.DAL.Domain;
 using AutoMapper;
 using Forum.BLL.Interfaces;
-using Forum.BLL.Services;
 using Forum.DAL.Repository;
 using Newtonsoft.Json.Serialization;
 using Cross_cutting.ExceptionHandlingFilter;
-using Microsoft.Extensions.Logging;
-using Serilog.AspNetCore;
-using Serilog.Sinks.File;
-using Serilog;
 using Cross_cutting.Interfaces;
 
 namespace Forum.Web
@@ -90,41 +84,6 @@ namespace Forum.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
                 
             });
-        }
-
-        private async Task<bool> ConfigureRoles(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
-        {
-            var ownerRoleExists = roleManager.RoleExistsAsync("Owner");
-            var adminRoleExists = roleManager.RoleExistsAsync("Admin");
-            Task.WaitAll(ownerRoleExists, adminRoleExists);
-            List<Task<IdentityResult>> tasks = new List<Task<IdentityResult>>();
-            //If role doesn't exist then create
-            if (!ownerRoleExists.Result)
-                tasks.Add(roleManager.CreateAsync(new IdentityRole("Owner")));
-            if (!adminRoleExists.Result)
-                tasks.Add(roleManager.CreateAsync(new IdentityRole("Admin")));
-            await Task.WhenAll(tasks);
-            foreach (var task in tasks)
-                if (!task.Result.Succeeded)
-                    return false;
-            var user = new User
-            {
-                UserName = Configuration.GetSection("OwnerEmail").Get<string>(),
-                FirstName = "Radu",
-                LastName = "Cebotari",
-                Email = Configuration.GetSection("OwnerEmail").Get<string>()
-            };
-            await userManager.CreateAsync(user, "30101997aB&");
-            var ownerUser = await userManager.FindByEmailAsync(Configuration.GetSection("OwnerEmail").Get<string>());
-            var isAlreadyOwner = await userManager.IsInRoleAsync(ownerUser, "Owner");
-            IdentityResult result = null;
-            if (!isAlreadyOwner)
-                result = await userManager.AddToRoleAsync(ownerUser, "Owner");
-            if (result != null && !result.Succeeded)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

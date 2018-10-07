@@ -9,8 +9,6 @@ using Cross_cutting.PageHelperClasses;
 
 namespace Forum.BLL.Services
 {
-    //TODO - remobe status codes from Services
-
     public class TopicService : ITopicService
     {
         private ITopicRepository _repository;

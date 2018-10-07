@@ -107,5 +107,79 @@
       "enabled": true,
       "renameLocals": true
     }
+  },
+  {
+    "outputFileName": "wwwroot/css/Post/PostStyle.min.css",
+    "inputFiles": [
+      "wwwroot/css/Post/PostStyle.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/Room/RoomTable.min.css",
+    "inputFiles": [
+      "wwwroot/css/Room/RoomTable.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Room/RoomsByTopicTableConfig.min.js",
+    "inputFiles": [
+      "wwwroot/js/Room/RoomsByTopicTableConfig.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Room/AllRoomsTableConfig.min.js",
+    "inputFiles": [
+      "wwwroot/js/Room/AllRoomsTableConfig.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/AdminPanel/css/AdminTopic.min.css",
+    "inputFiles": [
+      "wwwroot/AdminPanel/css/CreateTopic.css",
+      "wwwroot/Adminpanel/css/UpdateTopic.css",
+      "wwwroot/css/Shared/*"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/AdminPanel/js/AdminTableConfig.min.js",
+    "inputFiles": [
+      "wwwroot/AdminPanel/js/AdminTableConfig.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Topic/TopicTableConfig.min.js",
+    "inputFiles": [
+       "wwwroot/js/Topic/TopicTableConfig.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
 ]

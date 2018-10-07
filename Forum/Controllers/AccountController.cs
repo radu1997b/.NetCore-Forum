@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Forum.BLL.Interfaces;
+﻿using System.Threading.Tasks;
 using Forum.DAL.Domain;
 using Forum.Web.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Forum.Web.Controllers;
 
 namespace Forum.Web
@@ -20,16 +14,11 @@ namespace Forum.Web
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly ILogger _logger;
 
-        public AccountController(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            ILogger<AccountController> logger)
+        public AccountController(UserManager<User> userManager,SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -88,7 +77,7 @@ namespace Forum.Web
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToHomePage();
+            return RedirectToAction(nameof(AccountController.Login));
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿.user-info {
+    padding: 10px;
+    text-align: center;
+}
+
+.profile-photo {
+    margin: auto;
+    border-radius: 50px;
+    width:100px;
+    height:100px;
+}
+
+.message-container{
+    padding:20px;
+}

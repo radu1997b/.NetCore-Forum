@@ -6,7 +6,7 @@ using Cross_cutting.PageHelperClasses;
 using Forum.DAL.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Forum.DAL.Extensions;
+using Cross_cutting.Extensions;
 
 namespace Forum.DAL.Repository
 {

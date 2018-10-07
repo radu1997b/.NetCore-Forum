@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Cross_cutting.Extensions;
-using Cross_cutting.PageHelperClasses;
 using Forum.BLL.DataTransferObjects.Post;
 using Forum.BLL.Interfaces;
 using Forum.Web.Models.PostViewModels;
@@ -25,7 +19,7 @@ namespace Forum.Web.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreatePost(CreatePostViewModel model)
+        public IActionResult CreatePost([FromBody]CreatePostViewModel model)
         {
             if (!ModelState.IsValid)
             {

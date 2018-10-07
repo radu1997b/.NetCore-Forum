@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Forum.BLL.DataTransferObjects.Topic;
 using Forum.BLL.Interfaces;
-using Forum.DAL.Domain;
 using Forum.Web.Areas.AdminPanel.Models.AdminViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Cross_cutting.PageHelperClasses;
 using Forum.Web.Controllers;
 
 namespace Forum.Web.Areas.AdminPanel.Controllers
@@ -30,10 +22,18 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
         [HttpDelete]
         public ActionResult DeleteTopic(long id)
         {
-            _topicService.Delete(id);
-            return new JsonResult(new { result = "Succes" });
+            try
+            {
+                _topicService.Delete(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateTopic(TopicCreateViewModel model)
         {
         
@@ -46,6 +46,7 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
             return RedirectToAction(nameof(Topic));
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateTopic(TopicUpdateViewModel model)
         {
             if (!ModelState.IsValid)

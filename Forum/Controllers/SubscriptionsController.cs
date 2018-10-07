@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cross_cutting.Extensions;
-using Forum.BLL.DataTransferObjects.Subscriptions;
+﻿using Cross_cutting.Extensions;
 using Forum.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +20,7 @@ namespace Forum.Web.Controllers
             _subscriptionService.Subscribe(userId,Id);
              return RedirectToAction("GetRoom", "Room", new { Id });
         }
+        [HttpGet]
         public IActionResult UnSubscribe(long Id)
         {
             var userId = HttpContext.User.GetUserId();

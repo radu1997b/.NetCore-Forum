@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,7 +11,6 @@ using Forum.BLL.Interfaces;
 using Cross_cutting.Exceptions;
 using System.Net;
 using Cross_cutting.Extensions;
-using Castle.Core.Internal;
 
 namespace Forum.Web.Controllers
 {
@@ -28,6 +26,7 @@ namespace Forum.Web.Controllers
             _photoService = photoService;
             _mapper = mapper;
         }
+        [HttpGet]
         public async Task<IActionResult> ProfileInfo(string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);

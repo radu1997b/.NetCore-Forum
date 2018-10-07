@@ -1,12 +1,12 @@
 ﻿@model RoomViewModel
 
 <environment include="Development">
-    <link rel="stylesheet" href="~/css/Room/RoomStyle.css"/>
+    <link rel="stylesheet" href="~/css/Room/RoomStyle.css" />
 </environment>
 
 <environment exclude="Development">
-    @section Stylesheets{ 
-        <link rel="stylesheet" href="~/css/Room/RoomStyle.min.css"/>
+    @section Stylesheets{
+        <link rel="stylesheet" href="~/css/Room/RoomStyle.min.css" />
     }
 </environment>
 
@@ -27,14 +27,19 @@
             @await Html.PartialAsync("~/Views/Post/_PostPartial.cshtml", post);
         }
     </div>
+    @if (Model.PostList.Count == 0){
+        <h1>
+            <div class="text-center text-info">Be first to post a message!</div>
+        </h1>
+    }
     <div id="pagination-container">
         <ul class="pagination">
-            <li id="prev-page"><a href="#">Previous</a></li>
-            @for (var i = 1 ; i <= Model.NumberOfPages ; ++i)
+            <li id="prev-page"><a asp-route-page="@(Model.CurrentPage - 1)">Previous</a></li>
+            @for (var i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.NumberOfPages, Model.CurrentPage + 2); ++i)
             {
-                <li><a asp-action="GetRoom" asp-route-page="@i">@i</a></li>
+                <li><a asp-route-page="@i">@i</a></li>
             }
-            <li id="next-page"><a href="#">Next</a></li>
+            <li id="next-page"><a asp-route-page="@(Model.CurrentPage + 1)">Next</a></li>
         </ul>
     </div>
 </div>

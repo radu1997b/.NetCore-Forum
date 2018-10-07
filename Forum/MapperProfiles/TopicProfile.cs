@@ -16,7 +16,7 @@ namespace Forum.Web.MapperProfiles
         {
             CreateMap<Topic, TopicDTO>().ForMember(dest => dest.NumberOfRooms,
                                                    opt => opt.MapFrom(src => src.Rooms.Count()));
-            CreateMap<TopicDTO, Topic>();
+            CreateMap<TopicDTO, Topic>().ForMember(p => p.CreationDate, opt => opt.Ignore());
             CreateMap<TopicDTO, TopicViewModel>();
             CreateMap<TopicUpdateViewModel, TopicDTO>();
             CreateMap<TopicCreateViewModel, TopicDTO>();

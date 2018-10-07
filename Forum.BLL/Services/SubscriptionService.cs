@@ -43,14 +43,15 @@ namespace Forum.BLL.Services
         }
         public void UnSubscribe(string UserId,long RoomId)
         {
-            if (GetSubscriptionStatusForUser(UserId, RoomId) == false)
-                throw new ArgumentException();
             var subscription = new UserRoom
             {
                 UserId = UserId,
                 RoomId = RoomId
             };
-            _repository.Delete(subscription);
+            var entity = _repository.GetById(UserId, RoomId);
+            if (entity == null)
+                throw new ArgumentNullException();
+            _repository.Delete(entity);
             _repository.Save();
         }
     }

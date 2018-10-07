@@ -1,32 +1,11 @@
-﻿<style>
-    td {
-        border-top: 2px solid red !important;
-        padding-bottom: 10px !important;
-        padding-top: 10px !important;
+﻿<environment include="Development">
+    <link rel="stylesheet" href="~/css/Room/RoomTable.css"/>
+</environment>
+<environment exclude="Development">
+    @section Stylesheets{ 
+        <link rel="stylesheet" href="~/css/Room/RoomTable.min.css"/>
     }
-
-    tr:last-child td {
-        border-top: 2px solid red !important;
-        border-bottom: 2px solid red !important;
-    }
-
-    tr td:last-child {
-        border-right: 2px solid red !important;
-    }
-
-    tr td:first-child {
-        border-left: 2px solid red !important;
-    }
-
-    thead {
-        font-size: 1.5em;
-        padding-top: 5px;
-        padding-bottom: 2px;
-        border: 2px solid red;
-        color: deepskyblue;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-</style>
+</environment>
 
 <div class="container">
 <br />
@@ -47,63 +26,14 @@
 </div>
 </div>
 
-<script>
+<environment include="Development">
+    @section Scripts{ 
+        <script src="~/js/Topic/TopicTableConfig.js"></script>
+    }
+</environment>
+<environment exclude="Development">
+    @section Scripts{ 
+        <script src="~/js/Topic/TopicTableConfig.min.js"></script>
+    }
+</environment>
 
-    $(document).ready(() => {
-
-        $("#topic-admin-table").DataTable({
-
-            "processing": true, // for show progress bar
-            "serverSide": true, // for process server side
-            "filter": true, // this is for disable filter (search box)
-            "orderMulti": false, // for disable multiple column at once
-            "ajax": {
-                "url": "/AdminPanel/Admin/LoadTopics",
-                "type": "GET",
-                "datatype": "json",
-                "data": function (d) {
-                    let table = $("#topic-admin-table").DataTable();
-                    let order = table.order();
-                    d.numPage = table.page.info().page + 1;
-                    d.pageSize = table.page.info().length;
-                    d.columnToSort = "TopicName"
-                    d.order = order[0][1];
-                    d.searchKeyword = $('.dataTables_filter input').val();
-                    d.columnToSearch = "TopicName";
-                }
-            },
-            "columnDefs":
-                [{
-                    "targets": [0],
-                    "searchable": true,
-                },
-                {
-                    "targets": [2],
-                    "render": function (data, type, row) {
-                        return data.substring(0, 10);
-                    }
-                }],
-            "columns": [
-                {
-                    "render": function (data, type, full, meta) {
-                        return '<a href="/Room/RoomsByTopic/' + full.Id + '">' + full.TopicName + '</a>';
-                    },
-                    "autoWidth": true,
-                    "sortable": true
-                },
-                {
-                    "data": "NumberOfRooms",
-                    "name": "Number of Rooms",
-                    "autoWidth": true
-                },
-                {
-                    "data": "CreationDate",
-                    "name": "Created Date",
-                    "autoWidth": true
-                }
-            ]
-        });
-
-
-    });
-</script>

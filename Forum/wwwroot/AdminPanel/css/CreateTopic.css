@@ -1,0 +1,46 @@
+#create-room-item{
+    background-color:lightgreen;
+}
+
+#create-room-item a{
+    color:black;
+}
+
+#admin-page-item{
+    background-color:orangered;
+}
+
+#admin-page-item a{
+    color:black;
+}
+#user-btn{
+    color:aqua;
+    text-align:center;
+    cursor:pointer;
+    padding:0px;
+}
+
+#logout-form{
+    cursor:pointer;
+}
+
+#profile-letter{
+    width:45px;
+    height:45px;
+    display:inline;
+    background-color:aqua;
+}
+
+#topic-create-dialog{
+    align-self:center;
+}
+
+#topic-create-dialog div {
+    text-align: center;
+}
+
+#topic-create-dialog input {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

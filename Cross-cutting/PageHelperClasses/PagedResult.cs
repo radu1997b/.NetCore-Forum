@@ -8,5 +8,6 @@ namespace Cross_cutting.PageHelperClasses
     {
         public int AllItemsCount { get; set; }
         public IList<T> result { get; set; }
+        public int NumberOfPages { get; set; }
     }
 }

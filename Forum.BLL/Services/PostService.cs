@@ -5,9 +5,7 @@ using Forum.BLL.Interfaces;
 using Forum.DAL.Domain;
 using Forum.DAL.Repository;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Forum.BLL.Services
 {
@@ -29,7 +27,8 @@ namespace Forum.BLL.Services
             var result = new PagedResult<PostDTO>
             {
                 AllItemsCount = postsFiltered.AllItemsCount,
-                result = _mapper.Map<IList<Post>, IList<PostDTO>>(postsFiltered.result)
+                result = _mapper.Map<IList<Post>, IList<PostDTO>>(postsFiltered.result),
+                NumberOfPages = postsFiltered.NumberOfPages
             };
             return result;
         }

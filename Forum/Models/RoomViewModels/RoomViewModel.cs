@@ -15,12 +15,8 @@ namespace Forum.Web.Models.RoomViewModels
         public int NumberOfPosts { get; set; }
         public bool IsSubscribed { get; set; }
         public IList<PostViewModel> PostList { get; set; }
-        public int NumberOfPages { get {
-                if (NumberOfPosts % 10 == 0)
-                    return NumberOfPosts / 10;
-                return NumberOfPosts / 10 + 1;
-            }
-        }
+        public int NumberOfPages { get; set; }
+        public int CurrentPage { get; set; }
         public SubscriptionViewModel subscriptionViewModel => new SubscriptionViewModel
         {
             RoomId = RoomId,

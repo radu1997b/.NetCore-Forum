@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Cross_cutting.Extensions;
 using Forum.BLL.DataTransferObjects.Room;
 using Forum.BLL.Interfaces;
-using Forum.Web.Models;
 using Forum.Web.Models.HomeViewModels;
 using Forum.Web.Models.RoomViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +20,7 @@ namespace Forum.Web.Controllers
             _roomService = roomService;
             _mapper = mapper;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var model = new HomeViewModel();

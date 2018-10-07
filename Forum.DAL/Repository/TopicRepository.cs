@@ -1,11 +1,9 @@
-﻿using Cross_cutting.PageHelperClasses;
+﻿using Cross_cutting.Extensions;
+using Cross_cutting.PageHelperClasses;
 using Forum.DAL.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Forum.DAL.Extensions;
 
 namespace Forum.DAL.Repository
 {
