@@ -1,13 +1,5 @@
 ﻿@model PostViewModel
 @using Microsoft.AspNetCore.Html
-<environment include="Development">
-    <link rel="stylesheet" href="~/css/Post/PostStyle.css"/>
-</environment>
-<environment exclude="Development">
-    @section Stylesheets{ 
-        <link rel="stylesheet" href="~/css/Post/PostStyle.min.css"/>
-    }
-</environment>
 
 <div class="row post">
     <div class="col-sm-3 user-info">

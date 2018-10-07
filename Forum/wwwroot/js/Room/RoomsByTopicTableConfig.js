@@ -15,8 +15,8 @@
                 let order = table.order();
                 d.numPage = table.page.info().page + 1;
                 d.pageSize = 10;
-                d.columnToSort = "RoomName",
-                    d.order = order[0][1];
+                d.columnToSort = "RoomName";
+                d.order = order[0][1];
                 d.searchKeyword = $('.dataTables_filter input').val();
                 d.columnToSearch = "RoomName";
                 d.TopicId = window.location.pathname.split("/").pop();

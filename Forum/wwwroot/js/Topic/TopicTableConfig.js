@@ -43,12 +43,14 @@
             {
                 "data": "NumberOfRooms",
                 "name": "Number of Rooms",
-                "autoWidth": true
+                "autoWidth": true,
+                "sortable": false
             },
             {
                 "data": "CreationDate",
                 "name": "Created Date",
-                "autoWidth": true
+                "autoWidth": true,
+                "sortable": false
             }
         ],
         "bLengthChange": false, //thought this line could hide the LengthMenu

@@ -6,5 +6,5 @@ console.log($("#pagination-container li").filter(x => x.innerText == page));
 let lastPage = $("#pagination-container li").last().prev().text();
 if (page == 1)
     $("#prev-page").addClass("disabled");
-if (page == lastPage)
+if (page == lastPage || lastPage == "Previous")
     $("#next-page").addClass("disabled");

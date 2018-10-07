@@ -25,3 +25,14 @@ thead {
     color: deepskyblue;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+#topic-info {
+    width: 100%;
+    background-color: yellow;
+    font-size: 2em;
+    font-family: 'Arial';
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}

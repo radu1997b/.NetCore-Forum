@@ -44,3 +44,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+body{
+    padding:0px !important;
+}

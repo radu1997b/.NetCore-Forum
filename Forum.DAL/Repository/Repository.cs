@@ -14,8 +14,6 @@ namespace Forum.DAL.Repository
         public T GetById(long Id)
         {
             var entity = _context.Set<T>().Where(p => p.Id == Id).FirstOrDefault();
-            if (entity == null)
-                throw new Exception("Entity not found");
             return entity;
         }
         public Repository(DbContext context)
@@ -32,8 +30,7 @@ namespace Forum.DAL.Repository
         }
         public void Delete(T entity)
         {
-            var tempEntity = GetById(entity.Id);
-            _context.Set<T>().Remove(tempEntity);
+            _context.Set<T>().Remove(entity);
         }
         public void Save()
         {

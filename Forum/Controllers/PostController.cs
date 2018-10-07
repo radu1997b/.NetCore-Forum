@@ -19,7 +19,7 @@ namespace Forum.Web.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreatePost([FromBody]CreatePostViewModel model)
+        public IActionResult CreatePost(CreatePostViewModel model)
         {
             if (!ModelState.IsValid)
             {

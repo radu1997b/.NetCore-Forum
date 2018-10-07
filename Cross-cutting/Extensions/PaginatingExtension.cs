@@ -14,9 +14,9 @@ namespace Cross_cutting.Extensions
                 description.searchKeyword = "";
             var query = list.Where(p => p.GetType().GetProperty(description.columnToSearch).GetValue(p).ToString().StartsWith(description.searchKeyword));
             if (description.order.Equals("asc", StringComparison.InvariantCultureIgnoreCase))
-                query = query.OrderBy(p => p.GetType().GetProperty(description.columnToSort));
+                query = query.OrderBy(p => p.GetType().GetProperty(description.columnToSort).GetValue(p));
             else
-                query = query.OrderByDescending(p => p.GetType().GetProperty(description.columnToSort));
+                query = query.OrderByDescending(p => p.GetType().GetProperty(description.columnToSort).GetValue(p));
             var pagedResult = query.Page(description.numPage, description.pageSize);
             return pagedResult;
         }

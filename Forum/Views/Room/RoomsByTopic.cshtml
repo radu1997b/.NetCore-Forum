@@ -5,11 +5,11 @@
 </environment>
 <environment exclude="Development">
     @section Stylesheets{
-        <link rel="stylesheet" href="~/css/Room/RoomTable.css" />
+        <link rel="stylesheet" href="~/css/Room/RoomTable.min.css" />
     }
 </environment>
 
-<div class="text-center">
+<div class="text-center" id="topic-info">
     <div>Topic Name: @Model.TopicName</div>
     <div>Creation Date: @Model.CreationDate.Date.ToString("dd/MM/yyyy")</div>
 </div>

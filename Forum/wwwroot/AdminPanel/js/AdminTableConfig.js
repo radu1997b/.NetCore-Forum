@@ -15,7 +15,7 @@
                 let order = table.order();
                 d.numPage = table.page.info().page + 1;
                 d.pageSize = table.page.info().length;
-                d.columnToSort = table.settings().init().columns[order[0][0]]["data"];
+                d.columnToSort = table.settings().init().columns[order[0][0]].data;
                 d.order = order[0][1];
                 d.searchKeyword = $('.dataTables_filter input').val();
                 d.columnToSearch = "TopicName";

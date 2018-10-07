@@ -48,6 +48,7 @@
     "outputFileName": "wwwroot/css/Room/RoomStyle.min.css",
     "inputFiles": [
       "wwwroot/css/Room/RoomStyle.css",
+      "wwwroot/css/Post/PostStyle.css",
       "wwwroot/css/Shared/*"
     ],
     "minify": {
@@ -101,17 +102,6 @@
     "outputFileName": "wwwroot/css/Home/HomeStyle.min.css",
     "inputFiles": [
       "wwwroot/css/Home/HomeStyle.css",
-      "wwwroot/css/Shared/*"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    }
-  },
-  {
-    "outputFileName": "wwwroot/css/Post/PostStyle.min.css",
-    "inputFiles": [
-      "wwwroot/css/Post/PostStyle.css",
       "wwwroot/css/Shared/*"
     ],
     "minify": {
