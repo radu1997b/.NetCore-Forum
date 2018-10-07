@@ -22,17 +22,26 @@ namespace Forum.DAL.Extensions
                     .Take(description.pageSize)
                     .ToList()
             };
+            VerifyIfPageExists(description.numPage, pagedResult.AllItemsCount);
             return pagedResult;
         }
         public static PagedResult<T> Page<T>(this IQueryable<T> list,int page,int pageSize)
         {
+
             var pagedResult = new PagedResult<T>
             {
                 AllItemsCount = list.Count(),
                 result = list.Skip((page - 1) * pageSize).Take(pageSize).ToList()
             };
+            VerifyIfPageExists(page, pagedResult.AllItemsCount);
             return pagedResult;
         }
 
+        private static void VerifyIfPageExists(int page,long Count)
+        {
+            var pageDoesntExists = (page - 1) * 10 >= Count && page != 1;
+            if (pageDoesntExists || page < 1)
+                throw new ArgumentOutOfRangeException(nameof(page));
+        }
     }
 }

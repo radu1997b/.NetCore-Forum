@@ -12,6 +12,7 @@ using Forum.BLL.Interfaces;
 using Cross_cutting.Exceptions;
 using System.Net;
 using Cross_cutting.Extensions;
+using Castle.Core.Internal;
 
 namespace Forum.Web.Controllers
 {
@@ -34,6 +35,8 @@ namespace Forum.Web.Controllers
                 throw new HttpStatusCodeException((int)HttpStatusCode.NotFound, "Resource not found");
             var model = _mapper.Map<User, ProfileViewModel>(user);
             model.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            if (String.IsNullOrEmpty(model.Role))
+                model.Role = "Simple User";
             model.IsHisAccount = Id == User.GetUserId();
             return View(model);
         }
@@ -73,6 +76,5 @@ namespace Forum.Web.Controllers
             }
             return RedirectToAction(nameof(ProfileController.ProfileInfo), new { Id });
         }
-
     }
 }

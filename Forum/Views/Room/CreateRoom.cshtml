@@ -1,7 +1,7 @@
 ﻿@model CreateRoomViewModel
 
 <environment include="Development">
-    <link href="~/css/Room/CreateRoom.css" rel="stylesheet"/>
+    <link href="~/css/Room/CreateRoom.css" rel="stylesheet" />
 </environment>
 <environment exclude="Develpment">
     @section Stylesheets{
@@ -20,12 +20,15 @@
             <label asp-for="RoomName"></label>
             <input placeholder="Room Name" asp-for="RoomName" autocomplete="off" />
             <label asp-for="TopicId"></label><br />
-            @Html.DropDownListFor(m => m.TopicId, Model.ListOfTopics,null,null)
+            @Html.DropDownListFor(m => m.TopicId, Model.ListOfTopics, null, null)
             <input type="submit" id="submit-btn" />
         </form>
     </div>
 </div>
 
 @section Scripts {
+    <script>
+        $("select").attr("size", 5);
+    </script>
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

@@ -48,7 +48,10 @@
     display: inline;
 }
 
-
+select option{
+    font-family:'Times New Roman';
+    font-size:34px;
+}
 
 @media only screen and (min-width: 768px) {
     #form-container input {

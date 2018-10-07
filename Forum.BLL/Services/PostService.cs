@@ -31,9 +31,6 @@ namespace Forum.BLL.Services
                 AllItemsCount = postsFiltered.AllItemsCount,
                 result = _mapper.Map<IList<Post>, IList<PostDTO>>(postsFiltered.result)
             };
-            var pageDoesntExists = (page - 1) * 10 >= result.AllItemsCount && page != 1;
-            if (pageDoesntExists || page < 1)
-                throw new ArgumentOutOfRangeException(nameof(page));
             return result;
         }
         public void AddPost(CreatePostDTO post)

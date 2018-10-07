@@ -40,10 +40,10 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
             if (!ModelState.IsValid)
             {
                 AddErrors("Invalid attempt to create a new resource");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Topic));
             }
             _topicService.CreateTopic(model.TopicName);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Topic));
         }
         [HttpPost]
         public ActionResult UpdateTopic(TopicUpdateViewModel model)
@@ -51,11 +51,11 @@ namespace Forum.Web.Areas.AdminPanel.Controllers
             if (!ModelState.IsValid)
             {
                 AddErrors("Invalid attempt to update resource");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Topic));
             }
             var dto = _mapper.Map<TopicUpdateViewModel, TopicDTO>(model);
             _topicService.Update(dto);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Topic));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Forum.Web.Models.ProfileViewModels
         public string Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public string Role { get; set; }
+        public string Role { get; set; } = "Simple User";
         public DateTime? DateOfBirth { get; set; }
         public bool IsHisAccount { get; set; }
         public int NumberOfPosts { get; set; }

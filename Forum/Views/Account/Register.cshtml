@@ -2,7 +2,14 @@
 @{
     ViewData["Title"] = "Register";
 }
-<link href="@Url.Content("~/css/Account/RegisterLoginForms.css")" rel="stylesheet" type="text/css" />
+<environment include="Development">
+    <link href="@Url.Content("~/css/Account/RegisterLoginForms.css")" rel="stylesheet" type="text/css" />
+</environment>
+<environment exclude="Development">
+    @section Stylesheets{
+        <link href="@Url.Content("~/css/Form.min.css")" rel="stylesheet" type="text/css" />
+    }
+</environment>
 
 <div class="container" id="form-container">
     <div class="row">
@@ -17,12 +24,12 @@
                 <div>
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                     <input asp-for="FirstName" placeholder="First Name" autocomplete="off"
-                     title="Maximum allowed characters: 30"/>
+                           title="Maximum allowed characters: 30" />
                 </div>
                 <div>
                     <span asp-validation-for="LastName" class="text-danger"></span>
-                    <input asp-for="LastName" placeholder="Last Name" autocomplete="off" 
-                     title="Maximum allowed characters: 30"/>
+                    <input asp-for="LastName" placeholder="Last Name" autocomplete="off"
+                           title="Maximum allowed characters: 30" />
                 </div>
                 <div>
                     <span asp-validation-for="Email" class="text-danger"></span>
@@ -30,8 +37,8 @@
                 </div>
                 <div>
                     <span asp-validation-for="Password" class="text-danger"></span>
-                    <input asp-for="Password" placeholder="Password" autocomplete="off" 
-                     title="- Password minimum length: 6<br/>- Must contains an uppercase and a lowercase letter<br/>- Must contain a digit"/>
+                    <input asp-for="Password" placeholder="Password" autocomplete="off"
+                           title="- Password minimum length: 6<br/>- Must contains an uppercase and a lowercase letter<br/>- Must contain a digit" />
                 </div>
                 <div>
                     <span asp-validation-for="ConfirmPassword"></span>
@@ -43,7 +50,15 @@
     </div>
 </div>
 
-<script src="~/js/Account/FormManipulation.js"></script>
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+<environment include="Development">
+    @section Scripts {
+        <script src="~/js/Account/FormManipulation.js"></script>
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+</environment>
+<environment exclude="Development">
+    @section Scripts {
+        <script src="~/js/Account/FormManipulation.min.js"></script>
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+</environment>
